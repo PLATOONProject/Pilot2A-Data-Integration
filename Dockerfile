@@ -1,5 +1,5 @@
-# Download base image ubuntu 20.04
-FROM ubuntu:20.04
+# Download base image (Virtuoso so that we can load data to remote endpoint)
+FROM kemele/virtuoso:6-stable
 
 WORKDIR /data
 
