@@ -72,7 +72,8 @@
     rr:predicateObjectMap [
       rr:predicate sch:city ;
       rr:objectMap [
-        rr:predicateObjectMap <#PUPIN_CityMapping>
+        # rr:predicateObjectMap <#PUPIN_CityMapping>;
+        rr:template "http://platoon.eu/City/{city_name}";
       ]
     ];
 
@@ -97,7 +98,8 @@
     rr:predicateObjectMap [
       rr:predicate time:timeZone ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_TimeZoneMapping>
+        # rr:parentTriplesMap <#PUPIN_TimeZoneMapping>
+        rr:template "http://platoon.eu/TimeZone/{timezone}";
       ]
     ]
     .
@@ -157,7 +159,8 @@
     rr:predicateObjectMap [
       rr:predicate time:timeZone ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_TimeZoneMapping>
+        # rr:parentTriplesMap <#PUPIN_TimeZoneMapping>
+        rr:template "http://platoon.eu/TimeZone/{timezone}";
       ]
     ];
 
@@ -224,7 +227,8 @@
     rr:predicateObjectMap [
       rr:predicate sch:location;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -262,7 +266,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
     
@@ -278,14 +283,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedAirTemperatureEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedAirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AirTemperatureEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -306,7 +313,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
       ]
     ];
 
@@ -325,7 +333,6 @@
       ]
     ]
     .    
-
 
 <#WeatherBit_TemporalContextMapping> a rr:TriplesMap;
     rml:logicalSource [
@@ -368,7 +375,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -384,7 +392,8 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
@@ -392,7 +401,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedDiffuseSolarRadiationEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedDiffuseSolarRadiationEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/DiffuseSolarRadiationEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -413,7 +423,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
@@ -453,7 +464,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -468,14 +480,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedDirectSolarRadiationEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedDirectSolarRadiationEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/DirectSolarRadiationEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -496,7 +510,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";     
       ]
     ];
 
@@ -537,7 +552,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -552,14 +568,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedSolarRadiationEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedSolarRadiationEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SolarRadiationEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -580,7 +598,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";        
       ]
     ];
 
@@ -621,7 +640,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -633,19 +653,19 @@
       ]
     ];
 
-
-
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedRelativeHumidityEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedRelativeHumidityEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/RelativeHumidityEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -666,7 +686,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";        
       ]
     ];
 
@@ -708,7 +729,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -720,18 +742,19 @@
       ]
     ];
 
-
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedWindDirectionEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedWindDirectionEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/WindDirectionEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -744,15 +767,16 @@
       rr:tableName "weather_observations"
     ];
   
-     rr:subjectMap [
-      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/WindDirectionEvaluation";
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/WindDirectionEvaluation/{ob_time}";
       rr:class seas:WindDirectionEvaluation
     ];
     
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";       
       ]
     ];
 
@@ -806,7 +830,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -821,14 +846,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedWindSpeedEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedWindSpeedEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/WindSpeedEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -849,7 +876,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
       ]
     ];
 
@@ -889,7 +917,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -904,14 +933,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedUVIndexEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedUVIndexEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/UVIndexEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -932,7 +963,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";    
       ]
     ];
 
@@ -967,7 +999,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -982,14 +1015,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedOutdoorAirTemperatureEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedOutdoorAirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/OutdoorAirTemperatureEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1010,7 +1045,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";       
       ]
     ];
 
@@ -1050,7 +1086,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -1065,14 +1102,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedPressureEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedPressureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/PressureEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1093,7 +1132,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
@@ -1132,7 +1172,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -1147,14 +1188,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedDewPointEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedDewPointEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/DewPointEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1175,7 +1218,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
@@ -1215,7 +1259,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -1231,14 +1276,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedCloudEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedCloudEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1259,7 +1306,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
@@ -1299,7 +1347,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -1311,18 +1360,19 @@
       ]
     ];
 
-
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedSeaLevelPressureEvaluationMapping>;
+        ## rr:parentTriplesMap <#WeatherBit_ObservedSeaLevelPressureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SeaLevelPressureEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1343,7 +1393,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
@@ -1384,7 +1435,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -1400,14 +1452,16 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedSolarElevationAngelEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedSolarElevationAngelEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SolarElevationAngleEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1428,7 +1482,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
@@ -1468,7 +1523,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
 
@@ -1484,7 +1540,8 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
       ]
     ];
       
@@ -1492,7 +1549,8 @@
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_ObservedSolarHourAngelEvaluationMapping>;
+        # rr:parentTriplesMap <#WeatherBit_ObservedSolarHourAngelEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SolarHourAngleEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1512,7 +1570,8 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";         
       ]
     ];
 
