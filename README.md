@@ -99,7 +99,9 @@ docker-compose up -d
 
 ```
 
-2. Then run `rdfizer` script.
+2. Then run `rdfizer` script and load data to virtuoso
+
+- Transform data 
 
 The docker container created above using the docker-compose.yaml file will attach this repository as volume at `/data` endpoint. So running `rdfizer` script as follows will yield the same result as `Option 1` above.
 
@@ -113,7 +115,7 @@ docker exec -it sdmrdfizer python3 -m rdfizer -c /data/config.ini
 This will create the RDF dumps according the configuration file, `config.ini`, and store the RDF dump in `/data/` volume, which in turn in "Pilot2A-Data-Integration/".
 You can find the raw RDF file in `.nt` serialization inside 
 
-3. Load the RDF dump to Virtuoso
+- Load the RDF dump to Virtuoso
 
 
 To load the generated RDF dump in step 2, we will use a script included in `/data/scripts/` folder as follows:
@@ -124,13 +126,23 @@ docker exec -it sdmrdfizer /data/scripts/load_to_virtuoso.py
 
 ```
 
+OR to stransofrm and load data automatically, run the following:
+
+```bash
+
+docker exec -it sdmrdfizer /data/scripts/transform_and_load.py -c /data/config.ini 
+
+```
+
+`transform_and_load.py` script performs the transformation step and loading to virtuoso after the transformation is performed.
+
 Before running this, make sure you update the environmental variable in the `docker-compose.yml` file as follows:
 
 
 ```bash
 
 environment:
-      - SPARQL_ENDPOINT_IP=pilot2akg # Make sure this IP address is same as pilot2akg containers IP (to get the IP just run: docker inspect pilot2akg | grep IPAddress)
+      - SPARQL_ENDPOINT_IP=pilot2akg
       - SPARQL_ENDPOINT_USER=dba
       - SPARQL_ENDPOINT_PASSWD=dba
       - SPARQL_ENDPOINT_PORT=1116
