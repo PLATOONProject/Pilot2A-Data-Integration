@@ -110,7 +110,8 @@ docker exec -it sdmrdfizer python3 -m rdfizer -c /data/config.ini
 
 ```
 
-This will create the RDF dumps according the configuration file, `config.ini`, and store the RDF dump in `/data/` volume, which in turn in "Pilot2A-Data-Integration/"
+This will create the RDF dumps according the configuration file, `config.ini`, and store the RDF dump in `/data/` volume, which in turn in "Pilot2A-Data-Integration/".
+You can find the raw RDF file in `.nt` serialization inside 
 
 3. Load the RDF dump to Virtuoso
 
@@ -146,7 +147,9 @@ For example, write the following query to see the available classes (Concepts) i
 
 SELECT DISTINCT ?Concept
 WHERE {
+	GRAPH <http://platoon.eu/Pilot2A/KG> {
 		?s a ?Concept
+	 }
   } LIMIT 1000
 
 ```
