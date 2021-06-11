@@ -13,4 +13,4 @@ except Exception as e:
 	print("Exception while loading RDF data to viruoso  endpoint: ", e)
 	exit(-1)
 
-os.system("/data/virtuoso-script.sh " + virtuosoIP + " " + virtuosoUser + " " + virtuosoPass + " " + virtuosoPort + " " + virtuosoGraph + " " + outputfolder)
+os.system("/data/scripts/virtuoso-script.sh " + virtuosoIP + " " + virtuosoUser + " " + virtuosoPass + " " + virtuosoPort + " " + virtuosoGraph + " " + outputfolder)
