@@ -5,15 +5,21 @@ import sys
 import logging
 import traceback
 import getopt
+from configparser import ConfigParser, ExtendedInterpolation
 
 from rdfizer.semantify import semantify
+
 logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 logger = logging.getLogger()
 
 def transform(configfile, script="/data/scripts/virtuoso-script.sh"):
+	config = ConfigParser(interpolation=ExtendedInterpolation())
+	config.read(configfile)
 	try:
 		logger.info("Transforming data using " + str(configfile) + " configuration...")
-		outputfolder, status = semantify(configfile)
+		outputfolder = config["datasets"]["output_folder"]
+		semantify(configfile)
+		status = os.path.exists(outputfolder)
 		if status:
 			virtuosoIP = os.environ["SPARQL_ENDPOINT_IP"]
 			virtuosoUser = os.environ["SPARQL_ENDPOINT_USER"]
@@ -74,7 +80,7 @@ def main(argv):
     
 	configfile, script = get_options(argv[1:])
 	try:
- 		transform(queryfile, script)
+ 		transform(configfile, script)
 	except Exception as ex:
 		print(ex)
 
