@@ -112,3 +112,28 @@ docker exec -it sdmrdfizer python3 -m rdfizer -c /data/config.ini
 
 This will create the RDF dumps according the configuration file, `config.ini`, and store the RDF dump in `/data/` volume, which in turn in "Pilot2A-Data-Integration/"
 
+3. Load the RDF dump to Virtuoso
+
+
+To load the generated RDF dump in step 2, we will use a script included in `/data/scripts/` folder as follows:
+
+```bash
+
+docker exec -it sdmrdfizer /data/scripts/load_to_virtuoso.py 
+
+```
+
+Before running this, make sure you update the environmental variable in the `docker-compose.yml` file as follows:
+
+
+```bash
+
+environment:
+      - SPARQL_ENDPOINT_IP=pilot2akg # Make sure this IP address is same as pilot2akg containers IP (to get the IP just run: docker inspect pilot2akg | grep IPAddress)
+      - SPARQL_ENDPOINT_USER=dba
+      - SPARQL_ENDPOINT_PASSWD=dba
+      - SPARQL_ENDPOINT_PORT=1116
+      - SPARQL_ENDPOINT_GRAPH=http://platoon.eu/Pilot2A/KG 
+      - RDF_DUMP_FOLDER_PATH=/data/rdf-dump
+
+```
