@@ -137,3 +137,16 @@ environment:
       - RDF_DUMP_FOLDER_PATH=/data/rdf-dump
 
 ```
+
+4. Open [http://localhost:8891/sparql](http://localhost:8891/sparql) on your browser
+
+For example, write the following query to see the available classes (Concepts) in this endpoint:
+
+```bash
+
+SELECT DISTINCT ?Concept
+WHERE {
+		?s a ?Concept
+  } LIMIT 1000
+
+```
