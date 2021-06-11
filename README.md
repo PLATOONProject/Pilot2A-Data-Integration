@@ -2,7 +2,11 @@
 
 This repository contains basic settings for Pilot 2A Knowledge Graph. 
 
-- `mappings` - contain RML mappings of available Pilot 2A data sources using the `PLATOON` semantic data model v? .
+- `mappings` - contains RML mappings of available Pilot 2A data sources using the `PLATOON` semantic data model v? .
+- `scripts` - contains scripts used for transforming sources to RDF and loading it to triple store (Virtuoso)
+      - `virtuoso-script.sh`  - used to remotely connect and load data using `isql-v` tool of virtuoso on command line
+      - `load_to_virtuos.py` - used to load the transformed RDF data to virtuoso using the `virtuoso-script.sh` script
+      - `transform_and_load.py` - performs both transforming raw data to RDF and loading it virtuoso using the `virtuoso-script.sh` script
 - `config.ini` - configuration file for materializing the Knowledge Graph using [SDM-RDFizer](https://github.com/SDM-TIB/SDM-RDFizer).
 - `docker-compose.yml` - docker compose setup for transforming data to RDF and load it to `Virtuoso` triple store.
 
