@@ -80,29 +80,22 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query  """
-        SELECT DISTINCT 
-           CAST(plants.id AS CHAR(20)) AS plant_id,
-           CAST(systems.id AS CHAR(20))  AS system_id,
-           systems.name AS genUnitName,
-           country.country_code AS ccode,
-           plants.name AS plant_name,
-           assets.asset_name as asset_name,
-          weather_locations.city AS city,
-          weather_locations.lat AS lat,
-          weather_locations.lon AS lon
-       FROM `systems`
-           JOIN system_types ON systems.system_type_id = system_types.id
-           JOIN plants ON systems.plant_id = plants.id
-           JOIN weather_locations ON plants.weather_location_id = weather_locations.id
-           JOIN assets ON assets.id = plants.asset_id
-           JOIN organization ON assets.organization_id = organization.id
-           JOIN country ON country.id = organization.country_id
-           JOIN market_role ON organization.id = market_role.organization_id
-           JOIN eic_functions ON market_role.eic_function_id = eic_functions.id
-        WHERE
-           system_types.system_group = 'GeneratingUnit' AND 
-           eic_functions.eic_type_function_acronym = 'RES-W'
+      rml:query """
+          SELECT DISTINCT 
+              plants.name as plant_name,  
+              wind_plant_weather_data.plant_id as plant_id,
+              wind_plant_weather_data.timestamp as timestamp,
+              weather_locations.lon as lon,
+              weather_locations.lat as lat,
+              weather_locations.city as city,
+              assets.asset_name as asset_name
+          FROM `plants`     
+              JOIN wind_plant_weather_data 
+                ON plants.id = wind_plant_weather_data.plant_id 
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id
+              JOIN assets 
+                ON plants.asset_id = assets.id
       """
     ];
   
