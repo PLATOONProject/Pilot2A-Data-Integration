@@ -176,6 +176,51 @@
     ]
     .
 
+
+<#PUPIN_WeatherStationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rml:query """
+          SELECT DISTINCT 
+            plants.name as plant_name,  
+              weather_locations.lat as lat,
+              weather_locations.lon as lon
+          FROM `plants`     
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id 
+      """
+      
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WindFarm/WeatherStation/{lat}_{lon}_{plant_name}";
+      rr:class plt:WeatherStation
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:location;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:name;
+      rr:objectMap [
+        rml:reference "plant_name"
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference  "plant_name"
+      ]
+    ]
+    .
+
 <#PUPIN_TemporalContextMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
@@ -203,8 +248,25 @@
 <#PUPIN_ObservedTemperatureMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_weather_data"
+      rr:sqlVersion rr:SQL2008;
+      rml:query """
+          SELECT DISTINCT 
+              plants.name as plant_name,  
+              wind_plant_weather_data.plant_id as plant_id,
+              wind_plant_weather_data.timestamp as timestamp,
+              weather_locations.lon as lon,
+              weather_locations.lat as lat,
+              weather_locations.city as city,
+              assets.asset_name as asset_name
+          FROM `plants`     
+              JOIN wind_plant_weather_data 
+                ON plants.id = wind_plant_weather_data.plant_id 
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id
+              JOIN assets 
+                ON plants.asset_id = assets.id
+      """
+   
     ];
   
      rr:subjectMap [
@@ -215,11 +277,12 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
+        # rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
+        # rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        # ]
       ]
     ];
     
@@ -230,7 +293,13 @@
         rr:termType rr:IRI
       ]
     ];
-
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{plant_name}";
+      ]
+    ];
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
@@ -245,7 +314,6 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
       rr:tableName "wind_plant_weather_data"
     ];
   
@@ -288,31 +356,53 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
-      rr:tableName "wind_plant_weather_data"
+      rml:query """
+          SELECT DISTINCT 
+              plants.name as plant_name,  
+              wind_plant_weather_data.plant_id as plant_id,
+              wind_plant_weather_data.timestamp as timestamp,
+              weather_locations.lon as lon,
+              weather_locations.lat as lat,
+              weather_locations.city as city,
+              assets.asset_name as asset_name
+          FROM `plants`     
+              JOIN wind_plant_weather_data 
+                ON plants.id = wind_plant_weather_data.plant_id 
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id
+              JOIN assets 
+                ON plants.asset_id = assets.id
+      """
     ];
   
-     rr:subjectMap [
+    rr:subjectMap [
       rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindDirectionProperty";
       rr:class seas:WindDirectionProperty, ontowind:WindDirection
     ];
-
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
+        # rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
+        # rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        # ]
       ]
     ];
-
+    
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/PUPIN-RES-PROD";
-      rr:termType rr:IRI
+        rr:termType rr:IRI
+      ]
+    ];
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ];
 
@@ -371,8 +461,24 @@
 <#PUPIN_ObservedWindSpeedPropertyMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008 ;      
-      rr:tableName "wind_plant_weather_data"
+      rr:sqlVersion rr:SQL2008 ; 
+      rml:query """
+          SELECT DISTINCT 
+              plants.name as plant_name,  
+              wind_plant_weather_data.plant_id as plant_id,
+              wind_plant_weather_data.timestamp as timestamp,
+              weather_locations.lon as lon,
+              weather_locations.lat as lat,
+              weather_locations.city as city,
+              assets.asset_name as asset_name
+          FROM `plants`     
+              JOIN wind_plant_weather_data 
+                ON plants.id = wind_plant_weather_data.plant_id 
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id
+              JOIN assets 
+                ON plants.asset_id = assets.id
+      """
     ];
   
      rr:subjectMap [
@@ -383,19 +489,27 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
+        # rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
+        # rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        # ]
       ]
     ];
-
+    
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/PUPIN-RES-PROD";
-      rr:termType rr:IRI
+        rr:termType rr:IRI
+      ]
+    ];
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ];
 
@@ -454,8 +568,23 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
-      rr:tableName "wind_plant_weather_data"
+      rml:query """
+          SELECT DISTINCT 
+              plants.name as plant_name,  
+              wind_plant_weather_data.plant_id as plant_id,
+              wind_plant_weather_data.timestamp as timestamp,
+              weather_locations.lon as lon,
+              weather_locations.lat as lat,
+              weather_locations.city as city,
+              assets.asset_name as asset_name
+          FROM `plants`     
+              JOIN wind_plant_weather_data 
+                ON plants.id = wind_plant_weather_data.plant_id 
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id
+              JOIN assets 
+                ON plants.asset_id = assets.id
+      """
     ];
   
      rr:subjectMap [
@@ -466,19 +595,27 @@
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
+        # rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
+        # rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        # ]
       ]
     ];
-
+    
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/PUPIN-RES-PROD";
-      rr:termType rr:IRI
+        rr:termType rr:IRI
+      ]
+    ];
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ];
 

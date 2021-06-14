@@ -369,37 +369,42 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query """
-              SELECT DISTINCT 
-                CAST(plants.id AS CHAR(20)) as plant_id, 
-                plants.name as plant_name,  
-                weather_locations.lat as lat,
-                weather_locations.lon as lon,
-                weather_locations.city as city,
-                assets.asset_name as asset_name,
-                country.country_code as ccode,
-                eic_functions.eic_type_function_acronym as eic_func_acronym,
-                organization.organization_short_name as organization_short_name,
-                organization.organization_name as organization_name,
-                assets.id as asset_id
-              FROM `plants`     
-                JOIN weather_locations 
-                  ON plants.weather_location_id = weather_locations.id 
-                JOIN assets 
-                  ON plants.asset_id = assets.id
-                JOIN organization 
-                  ON assets.organization_id = organization.id
-                JOIN country 
-                  ON organization.country_id = country.id 
-                JOIN eic_functions 
-                  ON assets.eic_function_id = eic_functions.id 
-              WHERE  eic_functions.eic_type_function_acronym = 'RES-W'
-          """
+      rml:query  """
+        SELECT DISTINCT 
+           CAST(plants.id AS CHAR(20)) AS plant_id,
+           CAST(systems.id AS CHAR(20))  AS system_id,
+           systems.name AS genUnitName,
+           country.country_code AS ccode,
+           plants.name AS plant_name,
+           assets.asset_name as asset_name,
+          weather_locations.city AS city,
+          weather_locations.lat AS lat,
+          weather_locations.lon AS lon
+       FROM `systems`
+           JOIN system_types ON systems.system_type_id = system_types.id
+           JOIN plants ON systems.plant_id = plants.id
+           JOIN weather_locations ON plants.weather_location_id = weather_locations.id
+           JOIN assets ON assets.id = plants.asset_id
+           JOIN organization ON assets.organization_id = organization.id
+           JOIN country ON country.id = organization.country_id
+           JOIN market_role ON organization.id = market_role.organization_id
+           JOIN eic_functions ON market_role.eic_function_id = eic_functions.id
+        WHERE
+           system_types.system_group = 'GeneratingUnit' AND 
+           eic_functions.eic_type_function_acronym = 'RES-W'
+      """
     ];
 
     rr:subjectMap [
       rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}";
-      rr:class plt:WindFarm ;
+      rr:class plt:WindFarm, seas:FeatureOfInterest ;
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:location ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Location/{lat}_{lon}"
+      ]
     ];
 
     rr:predicateObjectMap [
@@ -436,7 +441,9 @@
            country.country_code AS ccode,
            plants.name AS plant_name,
            assets.asset_name as asset_name,
-          weather_locations.city AS city
+          weather_locations.city AS city,
+          weather_locations.lat AS lat,
+          weather_locations.lon AS lon
        FROM `systems`
            JOIN system_types ON systems.system_type_id = system_types.id
            JOIN plants ON systems.plant_id = plants.id
@@ -455,6 +462,13 @@
     rr:subjectMap [
       rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/{plant_id}_{system_id}_{plant_name}_{city}/{genUnitName}";
       rr:class cim:WindGeneratingUnit, cim:GeneratingUnit, plt:OffshoreWindTurbine, cim:WindPlantIEC, ontowind:WindTurbine, cim:Plant, seas:ElectricPowerProducer, seas:ElectricPowerSystem ;
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:location ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Location/{lat}_{lon}"
+      ]
     ];
 
     rr:predicateObjectMap [

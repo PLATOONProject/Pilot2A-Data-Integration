@@ -277,7 +277,6 @@
       ]
     ];
 
-
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
