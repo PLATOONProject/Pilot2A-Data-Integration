@@ -72,7 +72,7 @@ def get_options(argv):
 	return (configfile, script)
 
 def usage():
-	usage_str = ("Usage: {program} -c <pathto config.ini file>  -s <path to virtuos script.sh file> \n")
+	usage_str = ("Usage: {program} -c <pathto config.ini file>  -s <path to virtuoso script file> \n")
 	print (usage_str.format(program=sys.argv[0]),)
 
 
