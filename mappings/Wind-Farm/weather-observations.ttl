@@ -47,7 +47,32 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query "SELECT DISTINCT plants.id as plant_id,            plants.name as plant_name,             weather_locations.lat as lat,           weather_locations.lon as lon,           weather_locations.city as city,           assets.asset_name as asset_name,           country.country_code as ccode,           eic_functions.eic_type_function_acronym as eic_func_acronym,           organization.organization_short_name as organization_short_name,           organization.organization_name as organization_name,           assets.id as asset_id         FROM `plants`                JOIN weather_locations              ON plants.weather_location_id = weather_locations.id            JOIN assets              ON plants.asset_id = assets.id           JOIN organization              ON assets.organization_id = organization.id           JOIN country              ON organization.country_id = country.id            JOIN eic_functions              ON assets.eic_function_id = eic_functions.id          WHERE  eic_functions.eic_type_function_acronym = 'RES-W'"
+      rml:query  """
+            SELECT DISTINCT 
+              CAST(plants.id AS CHAR(20)) as plant_id, 
+              plants.name as plant_name,  
+              weather_locations.lat as lat,
+              weather_locations.lon as lon,
+              weather_locations.city as city,
+              assets.asset_name as asset_name,
+              country.country_code as ccode,
+              eic_functions.eic_type_function_acronym as eic_func_acronym,
+              organization.organization_short_name as organization_short_name,
+              organization.organization_name as organization_name,
+              assets.id as asset_id
+            FROM `plants`     
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id 
+              JOIN assets 
+                ON plants.asset_id = assets.id
+              JOIN organization 
+                ON assets.organization_id = organization.id
+              JOIN country 
+                ON organization.country_id = country.id 
+              JOIN eic_functions 
+                ON assets.eic_function_id = eic_functions.id 
+            WHERE  eic_functions.eic_type_function_acronym = 'RES-W'
+          """
     ];
 
     rr:subjectMap [
@@ -67,7 +92,32 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query "SELECT DISTINCT plants.id as plant_id,            plants.name as plant_name,             weather_locations.lat as lat,           weather_locations.lon as lon,           weather_locations.city as city,           assets.asset_name as asset_name,           country.country_code as ccode,           eic_functions.eic_type_function_acronym as eic_func_acronym,           organization.organization_short_name as organization_short_name,           organization.organization_name as organization_name,           assets.id as asset_id         FROM `plants`                JOIN weather_locations              ON plants.weather_location_id = weather_locations.id            JOIN assets              ON plants.asset_id = assets.id           JOIN organization              ON assets.organization_id = organization.id           JOIN country              ON organization.country_id = country.id            JOIN eic_functions              ON assets.eic_function_id = eic_functions.id          WHERE  eic_functions.eic_type_function_acronym = 'RES-W'"
+      rml:query """
+            SELECT DISTINCT 
+              CAST(plants.id AS CHAR(20)) as plant_id, 
+              plants.name as plant_name,  
+              weather_locations.lat as lat,
+              weather_locations.lon as lon,
+              weather_locations.city as city,
+              assets.asset_name as asset_name,
+              country.country_code as ccode,
+              eic_functions.eic_type_function_acronym as eic_func_acronym,
+              organization.organization_short_name as organization_short_name,
+              organization.organization_name as organization_name,
+              assets.id as asset_id
+            FROM `plants`     
+              JOIN weather_locations 
+                ON plants.weather_location_id = weather_locations.id 
+              JOIN assets 
+                ON plants.asset_id = assets.id
+              JOIN organization 
+                ON assets.organization_id = organization.id
+              JOIN country 
+                ON organization.country_id = country.id 
+              JOIN eic_functions 
+                ON assets.eic_function_id = eic_functions.id 
+            WHERE  eic_functions.eic_type_function_acronym = 'RES-W'
+          """
     ];
 
     rr:subjectMap [
@@ -79,44 +129,49 @@
     rr:predicateObjectMap [
       rr:predicate plt:hasAirTemperature;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_ObservedTemperatureMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/AirTemperatureProperty"
+      #rr:parentTriplesMap <#PUPIN_ObservedTemperatureMapping>;
+        #rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        #]
+        
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate plt:hasWindDirection;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_ObservedWindDirectionEvaluationMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindDirectionProperty"
+        #rr:parentTriplesMap <#PUPIN_ObservedWindDirectionPropertyMapping>;
+        #rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        #]
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate plt:hasWindSpeed;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_ObservedWindSpeedEvaluationMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindSpeedProperty"
+        #rr:parentTriplesMap <#PUPIN_ObservedWindSpeedPropertyMapping>;
+        #rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        #]
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate plt:hasPressure;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_ObservedPressureEvaluationMapping>;
-        rr:joinCondition [
-          rr:child "plant_id";
-          rr:parent "plant_id"
-        ]
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/PressureProperty"
+        #rr:parentTriplesMap <#PUPIN_ObservedPressurePropertyMapping>;
+        #rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        #]
       ]
     ]
     .

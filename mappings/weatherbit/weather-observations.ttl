@@ -87,11 +87,12 @@
     rr:predicateObjectMap [
       rr:predicate plt:country ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_CountryMapping>;
-        rr:joinCondition [
-          rr:parent "country_code";
-          rr:child "country_code"
-        ]
+        rr:template "http://platoon.eu/Country/{country_code}"
+        # rr:parentTriplesMap <#PUPIN_CountryMapping>;
+        # rr:joinCondition [
+        #   rr:parent "country_code";
+        #  rr:child "country_code"
+        # ]
       ]
     ];
 
@@ -167,11 +168,8 @@
     rr:predicateObjectMap [
       rr:predicate sch:country ;
       rr:objectMap [
-        rr:parentTriplesMap <#PUPIN_CountryMapping>;
-        rr:joinCondition [
-          rr:parent "country_code";
-          rr:child "country_code"
-        ]
+        rr:template "http://platoon.eu/Country/{country_code}"
+        
       ]
     ]
     .
@@ -185,7 +183,7 @@
     ];
 
     rr:subjectMap [
-      rr:template "http://platoon.eu/Country/{country_name}";
+      rr:template "http://platoon.eu/Country/{country_code}";
       rr:class sch:Country
     ];
 
