@@ -360,7 +360,7 @@
     rr:predicateObjectMap [
       rr:predicate plt:operates ;
       rr:objectMap [
-        rr:template "http://platoon.eu/ControlArea/{control_area}";        
+        rr:template "http://platoon.eu/ControlArea/{country_code}";        
       ]
     ]
     .
