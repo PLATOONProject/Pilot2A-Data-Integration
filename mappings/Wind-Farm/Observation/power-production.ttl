@@ -43,70 +43,7 @@
   d2rq:password "1234" .
 
 
-<#PUPIN_WindFarmMapping> a rr:TriplesMap;
-    rml:logicalSource [
-      rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;
-      rml:query  """
-            SELECT DISTINCT
-                plants.id AS plant_id,
-                plants.name AS plant_name,
-                weather_locations.lat AS lat,
-                weather_locations.lon AS lon,
-                weather_locations.city AS city,
-                assets.asset_name AS asset_name,
-                country.country_code AS ccode,
-                eic_functions.eic_type_function_acronym AS eic_func_acronym,
-                organization.organization_short_name AS organization_short_name,
-                organization.organization_name AS organization_name,
-                assets.id AS asset_id
-            FROM
-                `plants`
-                JOIN weather_locations ON plants.weather_location_id = weather_locations.id
-                JOIN assets ON plants.asset_id = assets.id
-                JOIN organization ON assets.organization_id = organization.id
-                JOIN country ON organization.country_id = country.id
-                JOIN eic_functions ON assets.eic_function_id = eic_functions.id
-            WHERE
-                eic_functions.eic_type_function_acronym = 'RES-W'
-          """
-    ];
-
-    rr:subjectMap [
-      rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}";
-      rr:class plt:WindFarm, seas:FeatureOfInterest ;
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate sch:location ;
-      rr:objectMap [
-        rr:template "http://platoon.eu/Location/{lat}_{lon}"
-      ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate seas:connectedTo ;
-      rr:objectMap [
-        rr:template "http://platoon.eu/ControlArea/{ccode}"
-      ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate seas:isMemberOf ;
-      rr:objectMap [
-        rr:template "http://platoon.eu/ControlArea/Asset/{asset_name}"
-      ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate rdfs:label ;
-      rr:objectMap [
-        rml:reference "plant_name"
-      ]
-    ]
-    .
-
-<#PUPIN_WindTurbineMapping> a rr:TriplesMap;
+<#PUPIN_WindTurbineProducedPowerMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
@@ -141,23 +78,104 @@
     ];
 
     rr:predicateObjectMap [
-      rr:predicate sch:location ;
+      rr:predicate seas:producedElectricPower ;
       rr:objectMap [
-        rr:template "http://platoon.eu/Location/{lat}_{lon}"
+        rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePower/{genUnitName}_{system_id}";
+      ]
+    ]
+    .
+
+<#PUPIN_WindPlantProductionPropMapping>   a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rml:query """
+          SELECT DISTINCT 
+            systems.name as genUnitName,
+            CAST(systems.id AS CHAR(20)) as system_id,
+            timestamp_start,
+            timestamp_end,
+            value,
+            wind_plant_energy_production.id as id
+          FROM wind_plant_energy_production
+            JOIN systems ON systems.id = wind_plant_energy_production.system_id
+      """
+      ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePower/{genUnitName}_{system_id}";
+      rr:class seas:ElectricPowerProperty, saref:Power, cim:ActivePower 
+      ]; 
+
+    rr:predicateObjectMap [
+      rr:predicate seas:evaluation ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WindPlantElectricPowerEvalMapping>   ;
+        rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePowerEvaluation/{id}_{system_id}_{timestamp_start}_{timestamp_end}"
+      ]
+    ]    
+    .
+
+<#PUPIN_WindPlantElectricPowerEvalMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;      
+      rr:tableName "wind_plant_energy_production"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePowerEvaluation/{id}_{system_id}_{timestamp_start}_{timestamp_end}";
+      rr:class plt:ActivePowerEvaluation, seas:ElectricPowerEvaluation
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate seas:hasTemporalContext ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WindPowerProductionTemporalContextMapping> ;
+        rr:template "http://platoon.eu/TemporalContext/{timestamp_start}_{timestamp_end}"
       ]
     ];
 
     rr:predicateObjectMap [
-      rr:predicate seas:isMemberOf ;
+      rr:predicate seas:evaluatedSimpleValue ;
       rr:objectMap [
-        rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
+        rml:reference "value";
+        rr:datatype xsd:double
+      ]
+    ];
+     rr:predicateObjectMap [
+      rr:predicate qudt:unit ;
+      rr:objectMap [
+        rr:constant unit:W
+      ]
+    ]
+    .
+
+<#PUPIN_WindPowerProductionTemporalContextMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;      
+      rr:tableName "wind_plant_energy_production"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/TemporalContext/{timestamp_start}_{timestamp_end}";
+      rr:class time:TemporalEntity, time:Interval
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:hasBeginning ;
+      rr:objectMap [
+        rml:reference "timestamp_start";
+        rr:datatype xsd:dateTimeStamp
       ]
     ];
 
     rr:predicateObjectMap [
-      rr:predicate rdfs:label ;
+      rr:predicate time:hasEnd ;
       rr:objectMap [
-        rml:reference "genUnitName"
+        rml:reference "timestamp_end";
+        rr:datatype xsd:dateTimeStamp
       ]
-    ].
-
+    ]
+    .

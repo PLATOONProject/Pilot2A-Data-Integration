@@ -54,7 +54,10 @@
            systems.name AS genUnitName,
            country.country_code AS ccode,
            plants.name AS plant_name,
-          weather_locations.city AS city
+           assets.asset_name as asset_name,
+          weather_locations.city AS city,
+          weather_locations.lat AS lat,
+          weather_locations.lon AS lon
        FROM `systems`
            JOIN system_types ON systems.system_type_id = system_types.id
            JOIN plants ON systems.plant_id = plants.id
@@ -62,8 +65,7 @@
            JOIN assets ON assets.id = plants.asset_id
            JOIN organization ON assets.organization_id = organization.id
            JOIN country ON country.id = organization.country_id
-           JOIN market_role ON organization.id = market_role.organization_id
-           JOIN eic_functions ON market_role.eic_function_id = eic_functions.id
+           JOIN eic_functions ON assets.eic_function_id = eic_functions.id
         WHERE
            system_types.system_group = 'GeneratingUnit' AND 
            eic_functions.eic_type_function_acronym = 'RES-W'
@@ -76,9 +78,9 @@
     ];
 
     rr:predicateObjectMap [
-      rr:predicate seas:producedElectricPower ;
+      rr:predicate seas:hasForecastdProducedElectricPower ;
       rr:objectMap [
-        rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePower/{genUnitName}_{system_id}";
+        rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ForecastOfActivePower/{genUnitName}_{system_id}";
       ]
     ]
     .
@@ -94,22 +96,22 @@
             timestamp_start,
             timestamp_end,
             value,
-            wind_plant_energy_production.id as id
-          FROM wind_plant_energy_production
-            JOIN systems ON systems.id = wind_plant_energy_production.system_id
+            wind_plant_energy_production_forecast.id as id
+          FROM wind_plant_energy_production_forecast
+            JOIN systems ON systems.id = wind_plant_energy_production_forecast.system_id
       """
       ];
 
     rr:subjectMap [
-      rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePower/{genUnitName}_{system_id}";
-      rr:class seas:ElectricPowerProperty, saref:Power, cim:ActivePower 
+      rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ForecastOfActivePower/{genUnitName}_{system_id}";
+      rr:class plt:ForecastOfElectricProductionProperty, plt:ForecastOfActivePower
       ]; 
 
     rr:predicateObjectMap [
       rr:predicate seas:evaluation ;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_WindPlantElectricPowerEvalMapping>   ;
-        rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePowerEvaluation/{id}_{system_id}_{timestamp_start}_{timestamp_end}"
+        rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ForecastOfActivePowerEvaluation/{id}_{system_id}_{timestamp_start}_{timestamp_end}"
       ]
     ]    
     .
@@ -118,12 +120,12 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_energy_production"
+      rr:tableName "wind_plant_energy_production_forecast"
     ];
 
     rr:subjectMap [
-      rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ActivePowerEvaluation/{id}_{system_id}_{timestamp_start}_{timestamp_end}";
-      rr:class plt:ActivePowerEvaluation, seas:ElectricPowerEvaluation
+      rr:template "http://platoon.eu/Plant/WindTurbine/Pilot2A/ForecastOfActivePowerEvaluation/{id}_{system_id}_{timestamp_start}_{timestamp_end}";
+      rr:class plt:ForecastOfActivePowerEvaluation, plt:ForecastOfElectricPowerEvaluation
     ];
 
     rr:predicateObjectMap [
@@ -135,13 +137,22 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate plt:forecastedBy ;
+      rr:objectMap [
+        rr:constant "http://platoon.eu/ForecastModel/PUPIN-WIND-PROD/v0.1";
+        rr:termType rr:IRI
+      ]
+    ];
+
+    rr:predicateObjectMap [
       rr:predicate seas:evaluatedSimpleValue ;
       rr:objectMap [
         rml:reference "value";
         rr:datatype xsd:double
       ]
     ];
-     rr:predicateObjectMap [
+
+    rr:predicateObjectMap [
       rr:predicate qudt:unit ;
       rr:objectMap [
         rr:constant unit:W
@@ -153,7 +164,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_energy_production"
+      rr:tableName "wind_plant_energy_production_forecast"
     ];
 
     rr:subjectMap [

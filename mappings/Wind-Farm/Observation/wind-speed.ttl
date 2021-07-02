@@ -47,7 +47,22 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query "SELECT DISTINCT plants.id as plant_id,            plants.name as plant_name,             weather_locations.lat as lat,           weather_locations.lon as lon,           weather_locations.city as city,           assets.asset_name as asset_name,           country.country_code as ccode,           eic_functions.eic_type_function_acronym as eic_func_acronym,           organization.organization_short_name as organization_short_name,           organization.organization_name as organization_name,           assets.id as asset_id         FROM `plants`                JOIN weather_locations              ON plants.weather_location_id = weather_locations.id            JOIN assets              ON plants.asset_id = assets.id           JOIN organization              ON assets.organization_id = organization.id           JOIN country              ON organization.country_id = country.id            JOIN eic_functions              ON assets.eic_function_id = eic_functions.id          WHERE  eic_functions.eic_type_function_acronym = 'RES-W'"
+      rml:query """
+            SELECT DISTINCT
+                plants.id AS plant_id,
+                plants.name AS plant_name,
+                weather_locations.city AS city,
+                assets.asset_name AS asset_name
+            FROM
+                `plants`
+                JOIN weather_locations ON plants.weather_location_id = weather_locations.id
+                JOIN assets ON plants.asset_id = assets.id
+                JOIN organization ON assets.organization_id = organization.id
+                JOIN country ON organization.country_id = country.id
+                JOIN eic_functions ON assets.eic_function_id = eic_functions.id
+            WHERE
+                eic_functions.eic_type_function_acronym = 'RES-W'
+          """
     ];
 
     rr:subjectMap [
@@ -56,9 +71,9 @@
     ];
 
     rr:predicateObjectMap [
-      rr:predicate plt:hasWindDirection;
+      rr:predicate plt:hasWindSpeed;
       rr:objectMap [
-        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindDirectionProperty";
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindSpeedProperty";
       ]
     ];
 
@@ -71,15 +86,14 @@
     .
 
 
-
 ################################################
-###  WindDirectionProperty Observations ########
+#########   WindSpeedProperty Observations ###########
 #################################################
 
-<#PUPIN_ObservedWindDirectionPropertyMapping> a rr:TriplesMap;
+<#PUPIN_ObservedWindSpeedPropertyMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;
+      rr:sqlVersion rr:SQL2008 ;      
       rml:query """
           SELECT DISTINCT 
               plants.name as plant_name,  
@@ -100,8 +114,8 @@
     ];
   
      rr:subjectMap [
-      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindDirectionProperty";
-      rr:class seas:WindDirectionProperty, ontowind:WindDirection
+      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindSpeedProperty";
+      rr:class seas:WindSpeedProperty
     ];
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
@@ -118,7 +132,7 @@
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
-        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{plant_name}";
+        rr:template "http://platoon.eu/PUPIN-RES-PROD/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ]; 
     rr:predicateObjectMap [
@@ -132,24 +146,23 @@
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_ObservedWindDirectionEvaluationMapping>;
-        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindDirectionEvaluation/{timestamp}";
+        # rr:parentTriplesMap <#PUPIN_ObservedWindSpeedEvaluationMapping>;
+        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindSpeedEvaluation/{timestamp}";
       ]
     ] 
     .    
 
 
-<#PUPIN_ObservedWindDirectionEvaluationMapping> a rr:TriplesMap;
+<#PUPIN_ObservedWindSpeedEvaluationMapping> a rr:TriplesMap;
     rml:logicalSource [
-      rml:source <#PLATOON_DB>;
+      rml:source <#PLATOON_DB>;      
       rr:sqlVersion rr:SQL2008;
-      
       rr:tableName "wind_plant_weather_data"
     ];
   
      rr:subjectMap [
-      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindDirectionEvaluation/{timestamp}";
-      rr:class seas:WindDirectionEvaluation
+      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/WindSpeedEvaluation/{timestamp}";
+      rr:class seas:WindSpeedEvaluation
     ];
     
     rr:predicateObjectMap [
@@ -163,15 +176,16 @@
     rr:predicateObjectMap [
       rr:predicate seas:evaluatedSimpleValue ;
       rr:objectMap [
-        rml:reference "wind_dir";
-        rr:datatype xsd:int
+        rml:reference "wind_spd";
+        rr:datatype xsd:double
       ]
     ];
+
 
     rr:predicateObjectMap [
       rr:predicate qudt:unit;
       rr:objectMap [
-        rr:constant unit:DEG
+        rr:constant unit:M-PER-SEC
       ]
     ]
     .    

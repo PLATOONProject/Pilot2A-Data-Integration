@@ -43,22 +43,50 @@
   d2rq:username "root";
   d2rq:password "1234" .
 
-<#PUPIN_WindFarmWeatherMapping> a rr:TriplesMap;
+
+<#PUPIN_PVPlantMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query "SELECT DISTINCT plants.id as plant_id,            plants.name as plant_name,             weather_locations.lat as lat,           weather_locations.lon as lon,           weather_locations.city as city,           assets.asset_name as asset_name,           country.country_code as ccode,           eic_functions.eic_type_function_acronym as eic_func_acronym,           organization.organization_short_name as organization_short_name,           organization.organization_name as organization_name,           assets.id as asset_id         FROM `plants`                JOIN weather_locations              ON plants.weather_location_id = weather_locations.id            JOIN assets              ON plants.asset_id = assets.id           JOIN organization              ON assets.organization_id = organization.id           JOIN country              ON organization.country_id = country.id            JOIN eic_functions              ON assets.eic_function_id = eic_functions.id          WHERE  eic_functions.eic_type_function_acronym = 'RES-W'"
+      rml:query  """
+        SELECT DISTINCT
+            plants.id AS plant_id,
+            plants.name AS plant_name,
+            weather_locations.lat AS lat,
+            weather_locations.lon AS lon,
+            weather_locations.city AS city,
+            assets.asset_name AS asset_name,
+            country.country_code AS ccode,
+            eic_functions.eic_type_function_acronym AS eic_func_acronym,
+            organization.organization_short_name AS organization_short_name,
+            organization.organization_name AS organization_name,
+            assets.id AS asset_id
+        FROM
+            `plants`
+            JOIN weather_locations ON plants.weather_location_id = weather_locations.id
+            JOIN assets ON plants.asset_id = assets.id
+            JOIN organization ON assets.organization_id = organization.id
+            JOIN country ON organization.country_id = country.id
+            JOIN eic_functions ON assets.eic_function_id = eic_functions.id
+        WHERE
+            eic_functions.eic_type_function_acronym = 'RES-PV'
+      """
     ];
 
     rr:subjectMap [
-      rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}";
-      rr:class plt:WindFarm, seas:FeatureOfInterest ;
+      rr:template "http://platoon.eu/SolarArray/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}";
+      rr:class seas:SolarArray, seas:FeatureOfInterest, seas:Zone ;
     ];
 
     rr:predicateObjectMap [
-      rr:predicate plt:hasPressure;
+      rr:predicate plt:hasSolarInsolation;
       rr:objectMap [
-        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/PressureProperty";
+         rr:template "http://platoon.eu/SolarArray/Pilot2A/Observation/{plant_id}/SolarInsolationProperty";
+        # rr:parentTriplesMap <#PUPIN_ObservedInsolationMapping>;
+        # rr:joinCondition [
+        #  rr:child "plant_id";
+        #  rr:parent "plant_id"
+        # ]
       ]
     ];
 
@@ -70,26 +98,25 @@
     ]
     .
 
-##################################################################
-#########   Pressure Property Observations ###########
-#################################################################
-
-<#PUPIN_ObservedPressurePropertyMapping> a rr:TriplesMap;
+################################################
+######### Insolation Observations ###########
+#################################################
+<#PUPIN_ObservedInsolationMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;
+      rr:sqlVersion rr:SQL2008;      
       rml:query """
           SELECT DISTINCT 
               plants.name as plant_name,  
-              wind_plant_weather_data.plant_id as plant_id,
-              wind_plant_weather_data.timestamp as timestamp,
+              pv_plant_weather_data.plant_id as plant_id,
+              pv_plant_weather_data.timestamp as timestamp,
               weather_locations.lon as lon,
               weather_locations.lat as lat,
               weather_locations.city as city,
               assets.asset_name as asset_name
           FROM `plants`     
-              JOIN wind_plant_weather_data 
-                ON plants.id = wind_plant_weather_data.plant_id 
+              JOIN pv_plant_weather_data 
+                ON plants.id = pv_plant_weather_data.plant_id 
               JOIN weather_locations 
                 ON plants.weather_location_id = weather_locations.id
               JOIN assets 
@@ -98,13 +125,14 @@
     ];
   
      rr:subjectMap [
-      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/PressureProperty";
-      rr:class seas:PressureProperty, ontowind:Pressure
+      rr:template "http://platoon.eu/SolarArray/Pilot2A/Observation/{plant_id}/SolarInsolationProperty";
+      rr:class plt:SolarInsolationProperty
     ];
+
     rr:predicateObjectMap [
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
-        rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
+        rr:template "http://platoon.eu/SolarArray/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
         # rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
         # rr:joinCondition [
         #  rr:child "plant_id";
@@ -116,60 +144,60 @@
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
-        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{plant_name}";
+        rr:template "http://platoon.eu/PUPIN-RES-PROD/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ];
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/PUPIN-RES-PROD";
-      rr:termType rr:IRI
+        rr:termType rr:IRI
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_ObservedPressureEvaluationMapping>;
-        rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/PressureEvaluation/{timestamp}";
+        # rr:parentTriplesMap <#PUPIN_ObservedInsolationEvaluationMapping>;
+        rr:template "http://platoon.eu/SolarArray/Pilot2A/Observation/{plant_id}/SolarInsolationEvaluation/{timestamp}";
       ]
     ] 
     .    
 
 
-<#PUPIN_ObservedPressureEvaluationMapping> a rr:TriplesMap;
+<#PUPIN_ObservedInsolationEvaluationMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
-      rr:tableName "wind_plant_weather_data"
+      rr:tableName "pv_plant_weather_data"
     ];
   
      rr:subjectMap [
-      rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/PressureEvaluation/{timestamp}";
-      rr:class seas:PressureEvaluation
+      rr:template "http://platoon.eu/SolarArray/Pilot2A/Observation/{plant_id}/SolarInsolationEvaluation/{timestamp}";
+      rr:class plt:SolarInsolationEvaluation
     ];
     
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_TemporalContextMapping> ;         
-        rr:template "http://platoon.eu/TemporalContext/{timestamp}";        
+        rr:template "http://platoon.eu/TemporalContext/{timestamp}";
       ]
     ];
 
     rr:predicateObjectMap [
       rr:predicate seas:evaluatedSimpleValue ;
       rr:objectMap [
-        rml:reference "pressure";
+        rml:reference "insolation";
         rr:datatype xsd:double
       ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate qudt:unit;
-      rr:objectMap [
-        rr:constant unit:MilliBAR
-      ]
     ]
+    #;
+
+    #rr:predicateObjectMap [
+    #  rr:predicate qudt:unit;
+    #  rr:objectMap [
+    #    rr:constant unit:DEG_C
+    #  ]
+    # ]
     .    
