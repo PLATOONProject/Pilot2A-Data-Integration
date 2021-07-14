@@ -174,7 +174,6 @@
     ]
     .
 
-
 <#PUPIN_CountryMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
@@ -208,7 +207,6 @@
       ]
     ]
     .
-
 
 <#PUPIN_WeatherStationMapping> a rr:TriplesMap;
     rml:logicalSource [
@@ -276,6 +274,15 @@
       rr:termType rr:IRI
       ]
     ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
 
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
@@ -385,7 +392,14 @@
       ]
     ];
 
-
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
@@ -466,6 +480,14 @@
       ]
     ];
 
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
@@ -554,6 +576,14 @@
       ]
     ];
 
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
@@ -651,6 +681,14 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+    rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
@@ -739,6 +777,14 @@
       ]
     ];
 
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
@@ -831,6 +877,15 @@
         rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
 
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
@@ -928,6 +983,14 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+    rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
@@ -972,10 +1035,7 @@
         rr:datatype xsd:double
       ]
     ]
-
     .    
-
-
 
 ##################################################################
 #########   Feels like AirTemperaure Property Observations ###########
@@ -988,7 +1048,7 @@
       rr:tableName "weather_observations"
     ];
   
-     rr:subjectMap [
+    rr:subjectMap [
       rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/OutdoorAirTemperatureProperty";
       rr:class plt:AirTemperatureProperty, seas:TemperatureProperty
     ];
@@ -1001,6 +1061,14 @@
       ]
     ];
 
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
@@ -1089,6 +1157,15 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+
+    rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/WeatherBit";
@@ -1175,6 +1252,15 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+
+    rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/WeatherBit";
@@ -1249,8 +1335,8 @@
     ];
   
      rr:subjectMap [
-      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudProperty";
-      rr:class plt:CloudProperty
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudCoverageProperty";
+      rr:class plt:CloudCoverageProperty
     ];
 
     rr:predicateObjectMap [
@@ -1269,6 +1355,15 @@
       ]
     ];
 
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+
 
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
@@ -1282,7 +1377,7 @@
       rr:predicate  seas:evaluation ;
       rr:objectMap [
         # rr:parentTriplesMap <#WeatherBit_ObservedCloudEvaluationMapping>;
-        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudEvaluation/{ob_time}";
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudCoverageEvaluation/{ob_time}";
       ]
     ] 
     .    
@@ -1296,8 +1391,8 @@
     ];
   
      rr:subjectMap [
-      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudEvaluation/{ob_time}";
-      rr:class plt:CloudEvaluation
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudCoverageEvaluation/{ob_time}";
+      rr:class plt:CloudCoverageEvaluation
     ];
     
     rr:predicateObjectMap [
@@ -1348,6 +1443,15 @@
         rr:template "http://platoon.eu/Location/{lat}_{lon}";
       ]
     ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
 
     rr:predicateObjectMap [
       rr:predicate  plt:datasource;
@@ -1438,6 +1542,15 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+
+    rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/WeatherBit";
@@ -1526,6 +1639,15 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+
+    rr:predicateObjectMap [
       rr:predicate  plt:datasource;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/WeatherBit";
@@ -1587,3 +1709,476 @@
       ]
     ]
     .   
+
+
+######################################
+######### Sunrise Observations ###########
+######################################
+<#WeatherBit_ObservedSunriseMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+     rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunriseProperty";
+      rr:class plt:SunriseProperty
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:isPropertyOf ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate  plt:datasource;
+      rr:objectMap [
+        rr:constant "http://platoon.eu/DataSource/WeatherBit";
+        rr:termType rr:IRI
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+
+    
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:evaluation ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_ForecastedAirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunriseEvaluation/{ob_time}";
+      ]
+    ] 
+    .    
+
+<#WeatherBit_ObservedSunriseEvaluationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunriseEvaluation/{ob_time}";
+      rr:class plt:SunriseEvaluation
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate seas:hasTemporalContext ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate seas:evaluatedSimpleValue ;
+      rr:objectMap [
+        rml:reference "sunrise";
+        rr:datatype xsd:double
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate qudt:unit;
+      rr:objectMap [
+        rr:constant unit:unitHour;
+        rr:termType rr:IRI
+      ]
+    ]
+    .    
+
+################################################
+######### Sunset Observations ###########
+#################################################
+<#WeatherBit_ObservedSunsetMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunsetProperty";
+      rr:class plt:SunsetProperty
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:isPropertyOf ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate  plt:datasource;
+      rr:objectMap [
+        rr:constant "http://platoon.eu/DataSource/WeatherBit";
+        rr:termType rr:IRI
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+
+    
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:evaluation ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_AirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunsetEvaluation/{ob_time}";
+      ]
+    ] 
+    .    
+
+<#WeatherBit_ObservedSunsetEvaluationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+     rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunsetEvaluation/{ob_time}";
+      rr:class plt:SunsetEvaluation
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate seas:hasTemporalContext ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate seas:evaluatedSimpleValue ;
+      rr:objectMap [
+        rml:reference "sunset";
+        rr:datatype xsd:double
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate qudt:unit;
+      rr:objectMap [
+        rr:constant unit:unitHour;
+        rr:termType rr:IRI
+      ]
+    ]
+    .    
+
+################################################
+######### Accumulated SnowFall Observations ###########
+#################################################
+<#WeatherBit_ObservedAccumulatedSnowMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+     rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedSnowFallProperty";
+      rr:class plt:AccumulatedSnowFallProperty
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:isPropertyOf ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate  plt:datasource;
+      rr:objectMap [
+        rr:constant "http://platoon.eu/DataSource/WeatherBit";
+      rr:termType rr:IRI
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+
+    
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:evaluation ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_ForecastedAirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedSnowFallEvaluation/{ob_time}";
+      ]
+    ] 
+    .    
+
+
+<#WeatherBit_ObservedAccumulatedSnowFallEvaluationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+     rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedSnowFallEvaluation/{ob_time}";
+      rr:class plt:AccumulatedSnowFallEvaluation
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate seas:hasTemporalContext ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate seas:evaluatedSimpleValue ;
+      rr:objectMap [
+        rml:reference "snow";
+        rr:datatype xsd:double
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate qudt:unit;
+      rr:objectMap [
+        rr:constant unit:MilliM;
+        rr:termType rr:IRI
+      ]
+    ]
+    .    
+
+###########################################################
+######### AccumulatedPrecipitation Observations ###########
+###########################################################
+<#WeatherBit_ObservedAccumulatedPrecipitationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+
+     rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedPrecipitationProperty";
+      rr:class plt:AccumulatedPrecipitationProperty
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:isPropertyOf ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate  plt:datasource;
+      rr:objectMap [
+        rr:constant "http://platoon.eu/DataSource/WeatherBit";
+        rr:termType rr:IRI
+      ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:evaluation ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_ForecastedAirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedPrecipitationEvaluation/{ob_time}";
+      ]
+    ] 
+    .    
+
+
+<#WeatherBit_AccumulatedPrecipitationEvaluationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedPrecipitationEvaluation/{ob_time}";
+      rr:class plt:AccumulatedPrecipitationEvaluation
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate seas:hasTemporalContext ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate seas:evaluatedSimpleValue ;
+      rr:objectMap [
+        rml:reference "precip";
+        rr:datatype xsd:double
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate qudt:unit;
+      rr:objectMap [
+        rr:constant unit:MilliM;
+        rr:termType rr:IRI
+      ]
+    ]
+    .    
+
+################################################
+######### Visibility Observations ###########
+#################################################
+<#WeatherBit_ObservedVisibilityMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/VisibilityProperty";
+      rr:class plt:VisibilityProperty
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:isPropertyOf ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_LocationsMapping>
+        rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:unitType ;
+      rr:objectMap [
+        rr:constant time:unitHour;
+        rr:termType rr:IRI
+      ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate  plt:datasource;
+      rr:objectMap [
+        rr:constant "http://platoon.eu/DataSource/WeatherBit";
+        rr:termType rr:IRI
+      ]
+    ];
+
+   
+    rr:predicateObjectMap [
+      rr:predicate prov:wasGeneratedBy;
+      rr:objectMap [
+        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  seas:evaluation ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_ForecastedAirTemperatureEvaluationMapping>;
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/VisibilityEvaluation/{ob_time}";
+      ]
+    ] 
+    .    
+
+
+<#WeatherBit_ObservedVisibilityEvaluationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+  
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/VisibilityEvaluation/{ob_time}";
+      rr:class plt:VisibilityEvaluation
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate seas:hasTemporalContext ;
+      rr:objectMap [
+        # rr:parentTriplesMap <#WeatherBit_TemporalContextMapping> ;         
+        rr:template "http://platoon.eu/TemporalContext/{ob_time}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate seas:evaluatedSimpleValue ;
+      rr:objectMap [
+        rml:reference "vis";
+        rr:datatype xsd:double
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate qudt:unit;
+      rr:objectMap [
+        rr:constant unit:KiloM;
+        rr:termType rr:IRI
+      ]
+    ]
+    .    

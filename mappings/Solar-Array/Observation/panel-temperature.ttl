@@ -166,7 +166,6 @@
     ] 
     .    
 
-
 <#PUPIN_ObservedPanelTemperatureEvaluationMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
@@ -193,13 +192,6 @@
       rr:objectMap [
         rml:reference "pannel_temperature";
         rr:datatype xsd:double
-      ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate qudt:unit;
-      rr:objectMap [
-        rr:constant unit:DEG_C
       ]
     ]
     .    

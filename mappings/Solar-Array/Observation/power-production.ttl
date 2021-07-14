@@ -8,6 +8,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix vann: <http://purl.org/vocab/vann/> .
@@ -82,6 +83,13 @@
       rr:objectMap [
         rr:template "http://platoon.eu/Plant/SolarArray/Pilot2A/ActivePower/{plant_name}";
       ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference "plant_name"
+      ]
     ]
     .
 
@@ -142,41 +150,6 @@
       rr:objectMap [
         rml:reference "value";
         rr:datatype xsd:double
-      ]
-    ];
-     rr:predicateObjectMap [
-      rr:predicate qudt:unit ;
-      rr:objectMap [
-        rr:constant unit:W
-      ]
-    ]
-    .
-
-<#PUPIN_SolarPanelProductionTemporalContextMapping> a rr:TriplesMap;
-    rml:logicalSource [
-      rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;      
-      rr:tableName "pv_plant_energy_production"
-    ];
-
-    rr:subjectMap [
-      rr:template "http://platoon.eu/TemporalContext/{timestamp_start}_{timestamp_end}";
-      rr:class time:TemporalEntity, time:Interval
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate time:hasBeginning ;
-      rr:objectMap [
-        rml:reference "timestamp_start";
-        rr:datatype xsd:dateTimeStamp
-      ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate time:hasEnd ;
-      rr:objectMap [
-        rml:reference "timestamp_end";
-        rr:datatype xsd:dateTimeStamp
       ]
     ]
     .

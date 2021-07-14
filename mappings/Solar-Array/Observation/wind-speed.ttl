@@ -187,13 +187,5 @@
         rml:reference "wind_spd";
         rr:datatype xsd:double
       ]
-    ];
-
-
-    rr:predicateObjectMap [
-      rr:predicate qudt:unit;
-      rr:objectMap [
-        rr:constant unit:M-PER-SEC
-      ]
     ]
     .    

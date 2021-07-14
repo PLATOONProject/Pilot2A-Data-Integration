@@ -188,12 +188,5 @@
         rml:reference "wind_dir";
         rr:datatype xsd:int
       ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate qudt:unit;
-      rr:objectMap [
-        rr:constant unit:DEG
-      ]
     ]
     .    

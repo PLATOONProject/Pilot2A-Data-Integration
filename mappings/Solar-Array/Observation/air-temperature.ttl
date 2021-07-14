@@ -108,8 +108,8 @@
       rml:query """
           SELECT DISTINCT 
               plants.name as plant_name,  
-              pv_plant_weather_data.plant_id as plant_id,
-              pv_plant_weather_data.timestamp as timestamp,
+              CAST(pv_plant_weather_data.plant_id AS CHAR(20)) as plant_id,
+              CAST(pv_plant_weather_data.timestamp AS CHAR(25)) as timestamp,
               weather_locations.lon as lon,
               weather_locations.lat as lat,
               weather_locations.city as city,
@@ -141,14 +141,14 @@
       ]
     ];
     rr:predicateObjectMap [
-      rr:predicate prov:wasGeneratedBy;
+      rr:predicate prov:wasGeneratedBy ;
       rr:objectMap [
         # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
         rr:template "http://platoon.eu/PUPIN-RES-PROD/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ];
     rr:predicateObjectMap [
-      rr:predicate  plt:datasource;
+      rr:predicate  plt:datasource ;
       rr:objectMap [
         rr:constant "http://platoon.eu/DataSource/PUPIN-RES-PROD";
         rr:termType rr:IRI
@@ -169,11 +169,15 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
-      rr:tableName "pv_plant_weather_data"
+      rml:query """
+        SELECT DISTINCT CAST(timestamp AS CHAR(25)) AS timestamp,
+                        CAST(out_temperature AS CHAR(30)) out_temperature,
+                        CAST(plant_id AS CHAR(20)) AS plant_id
+        FROM pv_plant_weather_data
+      """
     ];
   
-     rr:subjectMap [
+    rr:subjectMap [
       rr:template "http://platoon.eu/SolarArray/Pilot2A/Observation/{plant_id}/AirTemperatureEvaluation/{timestamp}";
       rr:class plt:AirTemperatureEvaluation
     ];
@@ -191,13 +195,6 @@
       rr:objectMap [
         rml:reference "out_temperature";
         rr:datatype xsd:double
-      ]
-    ];
-
-    rr:predicateObjectMap [
-      rr:predicate qudt:unit;
-      rr:objectMap [
-        rr:constant unit:DEG_C
       ]
     ]
     .    

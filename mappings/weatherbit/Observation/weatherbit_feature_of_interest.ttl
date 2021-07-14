@@ -73,6 +73,12 @@
         rml:reference "lon"
       ]
     ];
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
 
     rr:predicateObjectMap [
       rr:predicate plt:hasAirTemperature;
@@ -163,9 +169,9 @@
     ];
 
     rr:predicateObjectMap [
-      rr:predicate plt:hasCloud;
+      rr:predicate plt:hasCloudCoverage;
       rr:objectMap [
-      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudProperty";
+      rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/CloudCoverageProperty";
         # rr:parentTriplesMap <#WeatherBit_ObservedCloudPropertyMapping>
       ]
     ];
@@ -191,6 +197,46 @@
       rr:objectMap [
       	rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SolarHourAngleProperty";
         # rr:parentTriplesMap <#WeatherBit_ObservedSolarHourAnglePropertyMapping>
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:hasSunrise;
+      rr:objectMap [
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunriseProperty";
+        # rr:parentTriplesMap <#WeatherBit_ObservedAverageOzonePropertyMapping>
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:hasSunset;
+      rr:objectMap [
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/SunsetProperty";
+        # rr:parentTriplesMap <#WeatherBit_ObservedAverageOzonePropertyMapping>
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:hasAccumulatedSnowFall;
+      rr:objectMap [
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedSnowFallProperty";
+        # rr:parentTriplesMap <#WeatherBit_ObservedAccumulatedSnowFallPropertyMapping>
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:hasAccumulatedPrecipitation;
+      rr:objectMap [
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/AccumulatedPrecipitationProperty";
+        # rr:parentTriplesMap <#WeatherBit_ObservedAccumulatedPrecipitationPropertyMapping>
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:hasVisibility;
+      rr:objectMap [
+        rr:template "http://platoon.eu/WeatherBit/HourlyObservation/{lat}_{lon}_{station}/VisibilityProperty";
+        # rr:parentTriplesMap <#WeatherBit_ObservedVisibilityPropertyMapping>
       ]
     ]
 

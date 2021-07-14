@@ -43,7 +43,37 @@
   d2rq:username "root";
   d2rq:password "1234" .
 
-  
+
+
+<#PUPIN_SolarPanelProductionTemporalContextMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;      
+      rr:tableName "pv_plant_energy_production"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/TemporalContext/{timestamp_start}_{timestamp_end}";
+      rr:class time:TemporalEntity, time:Interval
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:hasBeginning ;
+      rr:objectMap [
+        rml:reference "timestamp_start";
+        rr:datatype xsd:dateTimeStamp
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:hasEnd ;
+      rr:objectMap [
+        rml:reference "timestamp_end";
+        rr:datatype xsd:dateTimeStamp
+      ]
+    ]
+    .
+    
 <#PUPIN_TemporalContextMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;

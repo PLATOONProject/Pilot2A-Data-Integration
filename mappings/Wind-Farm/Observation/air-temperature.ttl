@@ -74,11 +74,11 @@
       rr:predicate plt:hasAirTemperature;
       rr:objectMap [
          rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/AirTemperatureProperty";
-        # rr:parentTriplesMap <#PUPIN_ObservedTemperatureMapping>;
-        # rr:joinCondition [
-        #  rr:child "plant_id";
-        #  rr:parent "plant_id"
-        # ]
+         # rr:parentTriplesMap <#PUPIN_ObservedTemperatureMapping>;
+         # rr:joinCondition [
+         #  rr:child "plant_id";
+         # rr:parent "plant_id"
+         # ]
       ]
     ];
 
@@ -137,7 +137,7 @@
     rr:predicateObjectMap [
       rr:predicate prov:wasGeneratedBy;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
+        #rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
         rr:template "http://platoon.eu/PUPIN-RES-PROD/WeatherStation/{lat}_{lon}_{plant_name}";
       ]
     ];
@@ -152,11 +152,25 @@
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_ObservedAirTemperatureEvaluationMapping>;
+        #rr:parentTriplesMap <#PUPIN_ObservedAirTemperatureEvaluationMapping>;
         rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/AirTemperatureEvaluation/{timestamp}";
       ]
     ] 
     .    
+
+
+<#PUPIN_WeatherStationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName   "weather_observations"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/WeatherBit/WeatherStation/{lat}_{lon}_{station}";
+      rr:class plt:WeatherStation
+    ]
+    .
 
 
 <#PUPIN_ObservedAirTemperatureEvaluationMapping> a rr:TriplesMap;
@@ -167,7 +181,7 @@
       rr:tableName "wind_plant_weather_data"
     ];
   
-     rr:subjectMap [
+    rr:subjectMap [
       rr:template "http://platoon.eu/WindFarm/Pilot2A/Observation/{plant_id}/AirTemperatureEvaluation/{timestamp}";
       rr:class plt:AirTemperatureEvaluation
     ];
@@ -175,7 +189,7 @@
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_TemporalContextMapping> ;         
+        #rr:parentTriplesMap <#PUPIN_TemporalContextMapping> ;         
         rr:template "http://platoon.eu/TemporalContext/{timestamp}";
       ]
     ];
@@ -194,4 +208,25 @@
         rr:constant unit:DEG_C
       ]
     ]
+    .    
+
+<#PUPIN_TemporalContextMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "wind_plant_weather_data"
+    ];
+  
+     rr:subjectMap [
+      rr:template "http://platoon.eu/TemporalContext/{timestamp}";
+      rr:class time:TemporalEntity, time:Instant
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:inXSDDateTimeStamp;
+      rr:objectMap [
+        rml:reference "timestamp";
+        rr:datatype xsd:dateTimeStamp 
+      ]
+    ] 
     .    

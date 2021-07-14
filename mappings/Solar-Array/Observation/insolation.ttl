@@ -44,6 +44,7 @@
   d2rq:password "1234" .
 
 
+
 <#PUPIN_PVPlantMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
@@ -133,18 +134,13 @@
       rr:predicate  seas:isPropertyOf ;
       rr:objectMap [
         rr:template "http://platoon.eu/SolarArray/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
-        # rr:parentTriplesMap <#PUPIN_WindFarmWeatherMapping>;
-        # rr:joinCondition [
-        #  rr:child "plant_id";
-        #  rr:parent "plant_id"
-        # ]
       ]
     ];
     rr:predicateObjectMap [
-      rr:predicate prov:wasGeneratedBy;
+      rr:predicate  prov:wasGeneratedBy ;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_WeatherStationMapping>
-        rr:template "http://platoon.eu/PUPIN-RES-PROD/WeatherStation/{lat}_{lon}_{plant_name}";
+        rr:template "http://platoon.eu/PUPIN-RES-PROD/WeatherStation/{lat}_{lon}_{plant_name}" ;
+          rr:termType rr:IRI
       ]
     ];
     rr:predicateObjectMap [
@@ -158,12 +154,10 @@
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
       rr:objectMap [
-        # rr:parentTriplesMap <#PUPIN_ObservedInsolationEvaluationMapping>;
         rr:template "http://platoon.eu/SolarArray/Pilot2A/Observation/{plant_id}/SolarInsolationEvaluation/{timestamp}";
       ]
     ] 
     .    
-
 
 <#PUPIN_ObservedInsolationEvaluationMapping> a rr:TriplesMap;
     rml:logicalSource [
@@ -192,12 +186,4 @@
         rr:datatype xsd:double
       ]
     ]
-    #;
-
-    #rr:predicateObjectMap [
-    #  rr:predicate qudt:unit;
-    #  rr:objectMap [
-    #    rr:constant unit:DEG_C
-    #  ]
-    # ]
     .    
