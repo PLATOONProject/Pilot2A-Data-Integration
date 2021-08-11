@@ -34,7 +34,6 @@
 @prefix saref: <https://saref.etsi.org/core/> .
 @prefix gn: <https://www.geonames.org/ontology#> .
 
-
 @base <https://w3id.org/platoon/> .
 
 <#PLATOON_DB> a d2rq:Database;
@@ -43,15 +42,14 @@
   d2rq:username "root";
   d2rq:password "1234" .
 
-  
 <#PUPIN_TemporalContextMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "wind_plant_weather_data"
+      rml:query "SELECT DISTINCT REPLACE(timestamp, ' ', 'T') as timestamp FROM wind_plant_weather_data"
     ];
-  
-     rr:subjectMap [
+
+    rr:subjectMap [
       rr:template "http://platoon.eu/TemporalContext/{timestamp}";
       rr:class time:TemporalEntity, time:Instant
     ];
@@ -60,7 +58,8 @@
       rr:predicate time:inXSDDateTimeStamp;
       rr:objectMap [
         rml:reference "timestamp";
-        rr:datatype xsd:dateTimeStamp 
+        rr:datatype xsd:dateTime
       ]
     ] 
-    .    
+    .  
+  

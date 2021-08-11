@@ -94,8 +94,8 @@
           SELECT DISTINCT 
             systems.name as genUnitName,
             CAST(systems.id AS CHAR(20)) as system_id,
-            timestamp_start,
-            timestamp_end,
+            REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  
+            REPLACE(timestamp_end, ' ', 'T') as timestamp_end,
             value,
             wind_plant_energy_production.id as id
           FROM wind_plant_energy_production
@@ -121,7 +121,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_energy_production"
+      rml:query "SELECT DISTINCT id, system_id, value, REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM wind_plant_energy_production"
     ];
 
     rr:subjectMap [
@@ -156,7 +156,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_energy_production"
+      rml:query "SELECT DISTINCT REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM wind_plant_energy_production"
+
     ];
 
     rr:subjectMap [
@@ -168,7 +169,7 @@
       rr:predicate time:hasBeginning ;
       rr:objectMap [
         rml:reference "timestamp_start";
-        rr:datatype xsd:dateTimeStamp
+        rr:datatype xsd:dateTime
       ]
     ];
 
@@ -176,7 +177,7 @@
       rr:predicate time:hasEnd ;
       rr:objectMap [
         rml:reference "timestamp_end";
-        rr:datatype xsd:dateTimeStamp
+        rr:datatype xsd:dateTime
       ]
     ]
     .

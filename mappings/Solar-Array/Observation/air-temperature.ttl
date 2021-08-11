@@ -109,7 +109,7 @@
           SELECT DISTINCT 
               plants.name as plant_name,  
               CAST(pv_plant_weather_data.plant_id AS CHAR(20)) as plant_id,
-              CAST(pv_plant_weather_data.timestamp AS CHAR(25)) as timestamp,
+              REPLACE(pv_plant_weather_data.timestamp, ' ', 'T') as timestamp,
               weather_locations.lon as lon,
               weather_locations.lat as lat,
               weather_locations.city as city,
@@ -169,12 +169,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query """
-        SELECT DISTINCT CAST(timestamp AS CHAR(25)) AS timestamp,
-                        CAST(out_temperature AS CHAR(30)) out_temperature,
-                        CAST(plant_id AS CHAR(20)) AS plant_id
-        FROM pv_plant_weather_data
-      """
+             
+      rml:query "SELECT DISTINCT plant_id, out_temperature, REPLACE(timestamp, ' ', 'T') as timestamp FROM pv_plant_weather_data"
     ];
   
     rr:subjectMap [

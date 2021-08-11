@@ -94,8 +94,8 @@
           SELECT DISTINCT 
             systems.name as genUnitName,
             CAST(systems.id AS CHAR(20)) as system_id,
-            timestamp_start,
-            timestamp_end,
+            REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  
+            REPLACE(timestamp_end, ' ', 'T') as timestamp_end,
             value,
             wind_plant_energy_production_forecast.id as id
           FROM wind_plant_energy_production_forecast
@@ -120,8 +120,9 @@
 <#PUPIN_WindPlantElectricPowerEvalMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_energy_production_forecast"
+      rr:sqlVersion rr:SQL2008;
+      rml:query "SELECT DISTINCT id, system_id, value, REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM wind_plant_energy_production_forecast"
+   
     ];
 
     rr:subjectMap [
@@ -165,7 +166,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;      
-      rr:tableName "wind_plant_energy_production_forecast"
+      rml:query "SELECT DISTINCT REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM wind_plant_energy_production_forecast"
+
     ];
 
     rr:subjectMap [

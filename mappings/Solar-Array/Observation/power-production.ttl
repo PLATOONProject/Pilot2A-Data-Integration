@@ -44,38 +44,38 @@
   d2rq:password "1234" .
 
 
-<#PUPIN_PVPlantMapping> a rr:TriplesMap;
+<#PUPIN_SolarPanelMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query  """
-        SELECT DISTINCT
-            plants.id AS plant_id,
-            plants.name AS plant_name,
-            weather_locations.lat AS lat,
-            weather_locations.lon AS lon,
-            weather_locations.city AS city,
-            assets.asset_name AS asset_name,
-            country.country_code AS ccode,
-            eic_functions.eic_type_function_acronym AS eic_func_acronym,
-            organization.organization_short_name AS organization_short_name,
-            organization.organization_name AS organization_name,
-            assets.id AS asset_id
-        FROM
-            `plants`
-            JOIN weather_locations ON plants.weather_location_id = weather_locations.id
-            JOIN assets ON plants.asset_id = assets.id
-            JOIN organization ON assets.organization_id = organization.id
-            JOIN country ON organization.country_id = country.id
-            JOIN eic_functions ON assets.eic_function_id = eic_functions.id
+      rml:query """
+        SELECT DISTINCT 
+           CAST(plants.id AS CHAR(20)) AS plant_id,
+           CAST(systems.id AS CHAR(20))  AS system_id,
+           systems.name AS genUnitName,
+           country.country_code AS ccode,
+           plants.name AS plant_name,
+           assets.asset_name as asset_name,
+          weather_locations.city AS city,
+          weather_locations.lat AS lat,
+          weather_locations.lon AS lon
+        FROM `systems`
+           JOIN system_types ON systems.system_type_id = system_types.id
+           JOIN plants ON systems.plant_id = plants.id
+           JOIN weather_locations ON plants.weather_location_id = weather_locations.id
+           JOIN assets ON assets.id = plants.asset_id
+           JOIN organization ON assets.organization_id = organization.id
+           JOIN country ON country.id = organization.country_id
+           JOIN eic_functions ON assets.eic_function_id = eic_functions.id
         WHERE
-            eic_functions.eic_type_function_acronym = 'RES-PV'
+           system_types.system_group = 'GeneratingUnit' AND 
+           eic_functions.eic_type_function_acronym = 'RES-PV'
       """
     ];
 
     rr:subjectMap [
-      rr:template "http://platoon.eu/SolarArray/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}";
-      rr:class seas:SolarArray, seas:FeatureOfInterest, seas:Zone ;
+      rr:template "http://platoon.eu/Plant/SolarPanel/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}/SolarPanel_{system_id}";
+      rr:class seas:SolarPanel, cim:SolarGeneratingUnit, cim:GeneratingUnit, cim:Plant, seas:ElectricPowerProducer, seas:ElectricPowerSystem ;
     ];
 
     rr:predicateObjectMap [
@@ -102,8 +102,8 @@
           SELECT DISTINCT 
             plants.name as plant_name,
             CAST(plants.id AS CHAR(20)) as plant_id,
-            timestamp_start,
-            timestamp_end,
+            REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  
+            REPLACE(timestamp_end, ' ', 'T') as timestamp_end,
             value,
             pv_plant_energy_production.id as id
           FROM pv_plant_energy_production
@@ -128,8 +128,9 @@
 <#PUPIN_SolarPanelElectricPowerEvalMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
-      rr:sqlVersion rr:SQL2008;      
-      rr:tableName "pv_plant_energy_production"
+      rr:sqlVersion rr:SQL2008;       
+      rml:query "SELECT DISTINCT id, plant_id, value, REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM pv_plant_energy_production"
+    
     ];
 
     rr:subjectMap [

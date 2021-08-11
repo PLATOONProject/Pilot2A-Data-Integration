@@ -47,8 +47,7 @@
 ##################################################
 ########## Feature Of Interest to Property########
 ##################################################
-
-<#PUPIN_FeatureOfInterestMapping> a rr:TriplesMap;
+<#PUPIN_LocationMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
@@ -57,7 +56,7 @@
 
     rr:subjectMap [
       rr:template "http://platoon.eu/Location/{lat}_{lon}";
-      rr:class seas:FeatureOfInterest, gn:Feature
+      rr:class sch:Location, gn:Feature
     ];
 
     rr:predicateObjectMap [
@@ -73,12 +72,60 @@
         rml:reference "lon"
       ]
     ];
+
     rr:predicateObjectMap [
-      rr:predicate rdfs:description;
+      rr:predicate rdfs:label ;
       rr:objectMap [
-        rml:reference "weather_description";
+        rml:reference "city_name"
       ]
-    ] ;
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{country_code}";
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city_name}"
+      ]
+    ]
+    .
+
+<#PUPIN_CityMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/City/{city_name}";
+      rr:class sch:City, gn:Feature
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference "city_name"
+      ]
+    ]
+    .
+
+<#PUPIN_FeatureOfInterestMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_observations"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      rr:class seas:FeatureOfInterest, gn:Feature
+    ];
 
     rr:predicateObjectMap [
       rr:predicate plt:hasAirTemperature;
@@ -239,5 +286,4 @@
         # rr:parentTriplesMap <#WeatherBit_ObservedVisibilityPropertyMapping>
       ]
     ]
-
     .

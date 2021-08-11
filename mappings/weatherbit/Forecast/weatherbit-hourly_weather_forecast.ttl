@@ -212,7 +212,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -235,7 +236,6 @@
         rr:termType rr:IRI
       ]
     ] ;
-
 
     rr:predicateObjectMap [
       rr:predicate plt:inXSDUTCDateTimeStamp;
@@ -298,13 +298,6 @@
       rr:template "http://platoon.eu/Location/{lat}_{lon}";
       rr:class seas:FeatureOfInterest, gn:Feature
     ];
-
-    rr:predicateObjectMap [
-      rr:predicate rdfs:description;
-      rr:objectMap [
-        rml:reference "weather_description";
-      ]
-    ] ;
 
     rr:predicateObjectMap [
       rr:predicate plt:hasForecastedAirTemperature;
@@ -506,7 +499,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -568,7 +562,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, temp, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -576,6 +571,13 @@
       rr:class plt:ForecastOfAirTemperatureEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -610,7 +612,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -663,7 +666,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, app_temp, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -671,6 +675,13 @@
       rr:class plt:ForecastOfAirTemperatureEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -703,7 +714,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -757,7 +769,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, pres, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -765,6 +778,13 @@
       rr:class seas:ForecastOfPressureEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -798,7 +818,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -852,7 +873,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, dewpt, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -860,6 +882,13 @@
       rr:class plt:ForecastOfDewPointEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -893,7 +922,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -947,7 +977,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, clouds, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -955,6 +986,13 @@
       rr:class plt:ForecastOfCloudEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -989,7 +1027,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1042,7 +1081,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, clouds_hi, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1050,6 +1090,13 @@
       rr:class plt:ForecastOfHighLevelCloudEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1085,7 +1132,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1139,7 +1187,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, clouds_low, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1147,6 +1196,13 @@
       rr:class plt:ForecastOfLowLevelCloudEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1181,7 +1237,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1235,7 +1292,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, clouds_mid, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1243,6 +1301,13 @@
       rr:class plt:ForecastOfMidLevelCloudEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1275,7 +1340,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1328,7 +1394,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, slp, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1336,6 +1403,13 @@
       rr:class plt:ForecastOfSeaLevelPressureEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1369,7 +1443,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1423,7 +1498,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, dhi, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1431,6 +1507,13 @@
       rr:class plt:ForecastOfDiffuseSolarRadiationEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1465,7 +1548,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1518,7 +1602,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, dni, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1526,6 +1611,13 @@
       rr:class plt:ForecastOfDirectSolarRadiationEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1560,7 +1652,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1613,7 +1706,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, solar_rad, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1621,6 +1715,13 @@
       rr:class plt:ForecastOfSolarRadiationEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1655,7 +1756,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1707,7 +1809,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, ghi, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1715,6 +1818,13 @@
       rr:class plt:ForecastOfGlobalSolarRadiationEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1749,7 +1859,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1802,7 +1913,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, rh, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1810,6 +1922,13 @@
       rr:class plt:ForecastOfRelativeHumidityEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1844,7 +1963,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -1897,7 +2017,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, wind_dir, wind_cdir_full, wind_cdir, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
     rr:subjectMap [
@@ -1905,6 +2026,13 @@
       rr:class seas:ForecastOfWindDirectionEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -1953,7 +2081,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2007,7 +2136,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, wind_spd, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2015,6 +2145,13 @@
       rr:class seas:ForecastOfWindSpeedEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2048,7 +2185,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2101,7 +2239,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, wind_gust_spd, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2109,6 +2248,13 @@
       rr:class seas:ForecastOfWindGustSpeedEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2143,7 +2289,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2197,7 +2344,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, uv, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2205,6 +2353,13 @@
       rr:class plt:ForecastOfUVIndexEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2230,7 +2385,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2284,7 +2440,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, snow, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2292,6 +2449,13 @@
       rr:class plt:ForecastOfAccumulatedSnowFallEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2325,7 +2489,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2378,7 +2543,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, snow_depth, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2386,6 +2552,13 @@
       rr:class plt:ForecastOfSnowDepthEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2417,7 +2590,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2471,7 +2645,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, pop, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2479,6 +2654,13 @@
       rr:class plt:ForecastOfProbabilityOfPrecipitationEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2511,7 +2693,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2565,7 +2748,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, precip, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2573,6 +2757,13 @@
       rr:class plt:ForecastOfAccumulatedPrecipitationEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [
@@ -2606,7 +2797,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2660,13 +2852,21 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, ozone, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
     
     rr:subjectMap [
       rr:template "http://platoon.eu/WeatherBit/HourlyForecast/{lat}_{lon}_{city_name}/ForecastOfAverageOzoneEvaluation/{timestamp_local}";
       rr:class plt:ForecastOfAverageOzoneEvaluation
     ];
+    
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
 
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
@@ -2701,7 +2901,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2755,7 +2956,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "hourly_weather_forecasts"
+      rml:query "SELECT DISTINCT lat, lon, city_name, weather_description, vis, REPLACE(timestamp_local, ' ', 'T') as timestamp_local, REPLACE(timestamp_utc, ' ', 'T') as timestamp_utc  FROM hourly_weather_forecasts"
+    
     ];
   
      rr:subjectMap [
@@ -2763,6 +2965,13 @@
       rr:class plt:ForecastOfVisibilityEvaluation
     ];
     
+    rr:predicateObjectMap [
+      rr:predicate rdfs:description;
+      rr:objectMap [
+        rml:reference "weather_description";
+      ]
+    ] ;
+
     rr:predicateObjectMap [
       rr:predicate seas:hasTemporalContext ;
       rr:objectMap [

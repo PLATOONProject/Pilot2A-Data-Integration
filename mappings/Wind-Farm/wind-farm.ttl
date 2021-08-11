@@ -34,7 +34,6 @@
 @prefix saref: <https://saref.etsi.org/core/> .
 @prefix gn: <https://www.geonames.org/ontology#> .
 
-
 @base <https://w3id.org/platoon/> .
 
 <#PLATOON_DB> a d2rq:Database;
@@ -42,7 +41,6 @@
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "1234" .
-
 
 <#PUPIN_WindFarmMapping> a rr:TriplesMap;
     rml:logicalSource [
@@ -104,6 +102,20 @@
       rr:objectMap [
         rml:reference "plant_name"
       ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}";
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city}"
+      ]
     ]
     .
 
@@ -149,6 +161,20 @@
     ];
 
     rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}";
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city}"
+      ]
+    ];
+
+    rr:predicateObjectMap [
       rr:predicate seas:isMemberOf ;
       rr:objectMap [
         rr:template "http://platoon.eu/WindFarm/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
@@ -160,5 +186,6 @@
       rr:objectMap [
         rml:reference "genUnitName"
       ]
-    ].
+    ]
+    .
 

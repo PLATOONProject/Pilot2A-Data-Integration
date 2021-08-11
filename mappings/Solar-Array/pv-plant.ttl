@@ -104,6 +104,20 @@
       rr:objectMap [
         rml:reference "plant_name"
       ]
+    ];
+    
+    rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}";
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city}"
+      ]
     ]
     .
 
@@ -160,6 +174,20 @@
       rr:objectMap [
         rr:template "http://platoon.eu/SolarArray/Pilot2A/{plant_id}_{asset_name}_{plant_name}_{city}"
       ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}";
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city}"
+      ]
     ]
     .
 
@@ -209,7 +237,22 @@
       rr:objectMap [
         rml:reference "genUnitName"
       ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}";
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city}"
+      ]
     ].
+
 <#PUPIN_WeatherStationMapping> a rr:TriplesMap;
     rml:logicalSource [
       rml:source <#PLATOON_DB>;

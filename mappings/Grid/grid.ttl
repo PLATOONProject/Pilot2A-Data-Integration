@@ -34,7 +34,6 @@
 @prefix saref: <https://saref.etsi.org/core/> .
 @prefix gn: <https://www.geonames.org/ontology#> .
 
-
 @base <https://w3id.org/platoon/> .
 
 <#PLATOON_DB> a d2rq:Database;
@@ -109,12 +108,14 @@
       rr:template "http://platoon.eu/ControlArea/{ccode}";
       rr:class cim:ControlArea
     ];
+
     rr:predicateObjectMap [
       rr:predicate plt:name;
       rr:objectMap [
         rml:reference "name"
       ]
     ];
+
      rr:predicateObjectMap [
       rr:predicate plt:country ;
       rr:objectMap [
@@ -138,7 +139,7 @@
 
     rr:subjectMap [
       rr:template "http://platoon.eu/Country/{country_code}";
-      rr:class sch:Country
+      rr:class sch:Country, gn:Feature
     ];
 
     rr:predicateObjectMap [
@@ -155,7 +156,7 @@
       ]
     ];
 
-     rr:predicateObjectMap [
+    rr:predicateObjectMap [
       rr:predicate rdfs:label ;
       rr:objectMap [
         rml:reference  "country_name"
@@ -216,7 +217,6 @@
       ]
     ]
     .
-
 
 <#PUPIN_EIC_FunctionsMapping> a rr:TriplesMap;
     rml:logicalSource [
@@ -300,7 +300,6 @@
         rml:reference  "organization_name"
       ]
     ];
-
 
     rr:predicateObjectMap [
       rr:predicate rdfs:label ;

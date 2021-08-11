@@ -99,7 +99,7 @@
           SELECT DISTINCT 
               plants.name as plant_name,  
               wind_plant_weather_data.plant_id as plant_id,
-              wind_plant_weather_data.timestamp as timestamp,
+              REPLACE(wind_plant_weather_data.timestamp, ' ', 'T') as timestamp,
               weather_locations.lon as lon,
               weather_locations.lat as lat,
               weather_locations.city as city,
@@ -158,8 +158,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
-      rr:tableName "wind_plant_weather_data"
+      rml:query "SELECT DISTINCT REPLACE(timestamp, ' ', 'T') as timestamp, plant_id, wind_dir FROM wind_plant_weather_data"
     ];
   
      rr:subjectMap [

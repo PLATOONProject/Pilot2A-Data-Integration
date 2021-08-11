@@ -103,7 +103,7 @@
           SELECT DISTINCT 
               plants.name as plant_name,  
               wind_plant_weather_data.plant_id as plant_id,
-              wind_plant_weather_data.timestamp as timestamp,
+              REPLACE(wind_plant_weather_data.timestamp, ' ', 'T') as timestamp,
               weather_locations.lon as lon,
               weather_locations.lat as lat,
               weather_locations.city as city,
@@ -163,7 +163,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName   "weather_observations"
+      rr:tableName "weather_observations"
     ];
 
     rr:subjectMap [
@@ -177,8 +177,8 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      
-      rr:tableName "wind_plant_weather_data"
+      # rr:tableName "wind_plant_weather_data"
+      rml:query "SELECT DISTINCT REPLACE(timestamp, ' ', 'T') as timestamp, plant_id, out_temperature FROM wind_plant_weather_data"
     ];
   
     rr:subjectMap [
@@ -214,7 +214,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "wind_plant_weather_data"
+      rml:query  "SELECT DISTINCT REPLACE(timestamp, ' ', 'T') as timestamp FROM wind_plant_weather_data"
     ];
   
      rr:subjectMap [
@@ -226,7 +226,7 @@
       rr:predicate time:inXSDDateTimeStamp;
       rr:objectMap [
         rml:reference "timestamp";
-        rr:datatype xsd:dateTimeStamp 
+        rr:datatype xsd:dateTime 
       ]
     ] 
     .    
