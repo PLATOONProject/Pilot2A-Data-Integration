@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   sdmrdfizer:
-    build: .
+    image: kemele/sdmrdfizer:4.2.2
     hostname: sdmrdfizer 
     container_name: sdmrdfizer
     domainname: platoon
