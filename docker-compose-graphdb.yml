@@ -1,0 +1,38 @@
+version: "3.3"
+services:
+  sdmrdfizer:
+    image: kemele/sdmrdfizer:4.2.2
+    hostname: sdmrdfizer 
+    container_name: sdmrdfizer
+    domainname: platoon
+    mem_reservation: 1G
+    volumes:
+      - .:/data
+    networks:
+      - platoon
+    depends_on:
+      - pilot2akg
+    environment:
+      - SPARQL_ENDPOINT_IP=pilot2akg
+      - SPARQL_ENDPOINT_USER=dba
+      - SPARQL_ENDPOINT_PASSWD=dba
+      - SPARQL_ENDPOINT_PORT=1111
+      - SPARQL_ENDPOINT_GRAPH=http://platoon.eu/Pilot2A/KG 
+      - RDF_DUMP_FOLDER_PATH=/data
+
+  pilot2akg:
+    image: kemele/graphdb:9.8.1-free
+    hostname: pilot2akg
+    container_name: pilot2akg
+    domainname: platoon
+    mem_reservation: 2G
+    volumes:
+      - ./rdf-dump:/root/graphdb-import
+    ports:
+      - "7200:7200"
+    networks:
+      - platoon
+
+networks:
+  platoon:
+    external: false
