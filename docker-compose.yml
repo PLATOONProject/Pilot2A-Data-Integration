@@ -1,11 +1,10 @@
 version: "3.3"
 services:
   sdmrdfizer:
-    image: kemele/sdmrdfizer:4.2.2
+    image: eiglesias34/sdmrdffizer:4.0.1
     hostname: sdmrdfizer 
     container_name: sdmrdfizer
     domainname: platoon
-    mem_reservation: 1G
     volumes:
       - .:/data
     networks:
@@ -25,7 +24,6 @@ services:
     hostname: pilot2akg
     container_name: pilot2akg
     domainname: platoon
-    mem_reservation: 2G
     volumes:
       - ./rdf-dump:/data
     ports:
