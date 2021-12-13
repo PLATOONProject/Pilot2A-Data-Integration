@@ -126,7 +126,7 @@ To load the generated RDF dump in step 2, we will use a script included in `/dat
 
 ```bash
 
-docker exec -it sdmrdfizer /data/scripts/load_to_virtuoso.py 
+docker exec -it sdmrdfizer python3 /data/scripts/load_to_virtuoso.py 
 
 ```
 
@@ -134,7 +134,7 @@ OR to stransofrm and load data automatically, run the following:
 
 ```bash
 
-docker exec -it sdmrdfizer /data/scripts/transform_and_load.py -c /data/config.ini 
+docker exec -it sdmrdfizer python3 /data/scripts/transform_and_load.py -c /data/config.ini
 
 ```
 
