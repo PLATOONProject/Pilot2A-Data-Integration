@@ -4,8 +4,8 @@ if __name__ == '__main__':
 	cursor = db.cursor(buffered=True)
 	cursor.execute("use platoon_db_02_23")
 	cursor.execute("DROP TABLE IF EXISTS solar_array_properties")
-	cursor.execute("DROP VIEW IF EXISTS solar_array_observation")
-	cursor.execute("""CREATE VIEW solar_array_observation AS
+	cursor.execute("DROP TABLE IF EXISTS solar_array_observation")
+	cursor.execute("""CREATE TABLE solar_array_observation AS
 						SELECT DISTINCT 
 						  plants.name as plant_name,  
 						  CAST(pv_plant_weather_data.plant_id AS CHAR(20)) as plant_id,
@@ -21,8 +21,8 @@ if __name__ == '__main__':
 						    ON plants.weather_location_id = weather_locations.id
 						  JOIN assets 
 						    ON plants.asset_id = assets.id""")
-	cursor.execute("DROP VIEW IF EXISTS solar_array_observation_data")
-	cursor.execute("""CREATE VIEW solar_array_observation_data AS
+	cursor.execute("DROP TABLE IF EXISTS solar_array_observation_data")
+	cursor.execute("""CREATE TABLE solar_array_observation_data AS
 						SELECT DISTINCT 
 						plant_id,
 						out_temperature,
@@ -33,8 +33,8 @@ if __name__ == '__main__':
 						REPLACE(timestamp, ' ', 'T') as timestamp
 						FROM pv_plant_weather_data""")
 	cursor.execute("DROP TABLE IF EXISTS weatherbit_daily_weather_forecast_properties")
-	cursor.execute("DROP VIEW IF EXISTS weatherbit_daily_weather_forecast")
-	cursor.execute("""CREATE VIEW weatherbit_daily_weather_forecast AS
+	cursor.execute("DROP TABLE IF EXISTS weatherbit_daily_weather_forecast")
+	cursor.execute("""CREATE TABLE weatherbit_daily_weather_forecast AS
 						SELECT DISTINCT 
 						daily_weather_forecasts.lat as lat, 
 						daily_weather_forecasts.lon as lon, 
@@ -75,8 +75,8 @@ if __name__ == '__main__':
 						REPLACE(daily_weather_forecasts.datetime, ' ', 'T') as datetime
 						FROM daily_weather_forecasts""")
 	cursor.execute("DROP TABLE IF EXISTS weatherbit_hourly_weather_forecast_properties")
-	cursor.execute("DROP VIEW IF EXISTS weatherbit_hourly_weather_forecast")
-	cursor.execute("""CREATE VIEW weatherbit_hourly_weather_forecast AS
+	cursor.execute("DROP TABLE IF EXISTS weatherbit_hourly_weather_forecast")
+	cursor.execute("""CREATE TABLE weatherbit_hourly_weather_forecast AS
 						SELECT DISTINCT 
 						hourly_weather_forecasts.lat as lat, 
 						hourly_weather_forecasts.lon as lon, 
@@ -111,8 +111,8 @@ if __name__ == '__main__':
 						REPLACE(hourly_weather_forecasts.timestamp_utc, ' ', 'T') as timestamp_utc
 						FROM hourly_weather_forecasts""")
 	cursor.execute("DROP TABLE IF EXISTS weather_observations_properties")
-	cursor.execute("DROP VIEW IF EXISTS weather_observation_data")
-	cursor.execute("""CREATE VIEW weather_observation_data AS
+	cursor.execute("DROP TABLE IF EXISTS weather_observation_data")
+	cursor.execute("""CREATE TABLE weather_observation_data AS
 						SELECT DISTINCT 
 						weather_observations.lat as lat, 
 						weather_observations.lon as lon, 
@@ -142,8 +142,8 @@ if __name__ == '__main__':
 						weather_observations.pres as pres,
 						REPLACE(weather_observations.ob_time, ' ', 'T') as ob_time
 						FROM weather_observations""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_observation_w")
-cursor.execute("""CREATE VIEW wind_farm_observation_w AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_observation_w")
+cursor.execute("""CREATE TABLE wind_farm_observation_w AS
 					SELECT DISTINCT 
 			           CAST(plants.id AS CHAR(20)) AS plant_id,
 			           CAST(systems.id AS CHAR(20))  AS system_id,
@@ -165,8 +165,8 @@ cursor.execute("""CREATE VIEW wind_farm_observation_w AS
 			        WHERE
 			           system_types.system_group = 'GeneratingUnit' AND 
 			           eic_functions.eic_type_function_acronym = 'RES-W'""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_observation_pv")
-cursor.execute("""CREATE VIEW wind_farm_observation_pv AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_observation_pv")
+cursor.execute("""CREATE TABLE wind_farm_observation_pv AS
 					SELECT DISTINCT 
 			           CAST(plants.id AS CHAR(20)) AS plant_id,
 			           CAST(systems.id AS CHAR(20))  AS system_id,
@@ -188,8 +188,8 @@ cursor.execute("""CREATE VIEW wind_farm_observation_pv AS
 			        WHERE
 			           system_types.system_group = 'GeneratingUnit' AND 
 			           eic_functions.eic_type_function_acronym = 'RES-PV'""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_production_forecast")
-cursor.execute("""CREATE VIEW wind_farm_production_forecast AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_production_forecast")
+cursor.execute("""CREATE TABLE wind_farm_production_forecast AS
 					SELECT DISTINCT 
 			            systems.name as genUnitName,
 			            CAST(systems.id AS CHAR(20)) as system_id,
@@ -199,8 +199,8 @@ cursor.execute("""CREATE VIEW wind_farm_production_forecast AS
 			            wind_plant_energy_production_forecast.id as id
 			          FROM wind_plant_energy_production_forecast
 			            JOIN systems ON systems.id = wind_plant_energy_production_forecast.system_id""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_production")
-cursor.execute("""CREATE VIEW wind_farm_production AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_production")
+cursor.execute("""CREATE TABLE wind_farm_production AS
 					SELECT DISTINCT 
 			            systems.name as genUnitName,
 			            CAST(systems.id AS CHAR(20)) as system_id,
@@ -210,8 +210,8 @@ cursor.execute("""CREATE VIEW wind_farm_production AS
 			            wind_plant_energy_production.id as id
 			          FROM wind_plant_energy_production
 			            JOIN systems ON systems.id = wind_plant_energy_production.system_id""")
-cursor.execute("DROP VIEW IF EXISTS wind_plant_production_forecast")
-cursor.execute("""CREATE VIEW wind_plant_production_forecast AS
+cursor.execute("DROP TABLE IF EXISTS wind_plant_production_forecast")
+cursor.execute("""CREATE TABLE wind_plant_production_forecast AS
 					SELECT DISTINCT 
 						id, 
 						system_id, 
@@ -219,8 +219,8 @@ cursor.execute("""CREATE VIEW wind_plant_production_forecast AS
 						REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  
 						REPLACE(timestamp_end, ' ', 'T') as timestamp_end 
 					FROM wind_plant_energy_production_forecast""")
-cursor.execute("DROP VIEW IF EXISTS wind_plant_production")
-cursor.execute("""CREATE VIEW wind_plant_production AS
+cursor.execute("DROP TABLE IF EXISTS wind_plant_production")
+cursor.execute("""CREATE TABLE wind_plant_production AS
 					SELECT DISTINCT 
 						id, 
 						system_id, 
@@ -228,8 +228,8 @@ cursor.execute("""CREATE VIEW wind_plant_production AS
 						REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  
 						REPLACE(timestamp_end, ' ', 'T') as timestamp_end 
 					FROM wind_plant_energy_production""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_observation_data")
-cursor.execute("""CREATE VIEW wind_farm_observation_data AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_observation_data")
+cursor.execute("""CREATE TABLE wind_farm_observation_data AS
 					SELECT DISTINCT
 		                plants.id AS plant_id,
 		                plants.name AS plant_name,
@@ -244,8 +244,8 @@ cursor.execute("""CREATE VIEW wind_farm_observation_data AS
 		                JOIN eic_functions ON assets.eic_function_id = eic_functions.id
 		            WHERE
 		                eic_functions.eic_type_function_acronym = 'RES-W'""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_observation_property")
-cursor.execute("""CREATE VIEW wind_farm_observation_property AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_observation_property")
+cursor.execute("""CREATE TABLE wind_farm_observation_property AS
 					SELECT DISTINCT 
 			              plants.name as plant_name,  
 			              wind_plant_weather_data.plant_id as plant_id,
@@ -261,8 +261,8 @@ cursor.execute("""CREATE VIEW wind_farm_observation_property AS
 			                ON plants.weather_location_id = weather_locations.id
 			              JOIN assets 
 			                ON plants.asset_id = assets.id""")
-cursor.execute("DROP VIEW IF EXISTS wind_farm_observation_evaluation")
-cursor.execute("""CREATE VIEW wind_farm_observation_evaluation AS
+cursor.execute("DROP TABLE IF EXISTS wind_farm_observation_evaluation")
+cursor.execute("""CREATE TABLE wind_farm_observation_evaluation AS
 					SELECT DISTINCT 
 						REPLACE(timestamp, ' ', 'T') as timestamp, 
 						plant_id, 
