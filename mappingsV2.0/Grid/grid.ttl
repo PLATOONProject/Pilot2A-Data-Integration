@@ -1,0 +1,366 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix cc: <http://creativecommons.org/ns#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix seas: <https://w3id.org/seas/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix brick: <https://brickschema.org/schema/1.1/Brick#> .
+@prefix plt: <https://w3id.org/platoon/>.
+@prefix oema: <http://www.purl.org/oema/ontologynetwork#> .
+@prefix s4bldg: <https://w3id.org/def/saref4bldg#> .
+@prefix cim: <http://www.iec.ch/TC57/CIM#> .
+@prefix gn: <https://www.geonames.org/ontology#> .
+@prefix sch: <https://schema.org/> .
+@prefix wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+@prefix unit: <http://www.qudt.org/2.1/vocab/unit/> .
+@prefix qudt: <http://www.qudt.org/2.1/schema/qudt/> .
+@prefix ontowind: <http://www.semanticweb.org/ontologies/2011/9/Ontology1318785573683.owl#> .
+@prefix saref: <https://saref.etsi.org/core/> .
+@prefix gn: <https://www.geonames.org/ontology#> .
+
+@base <https://w3id.org/platoon/> .
+
+<#PLATOON_DB> a d2rq:Database;
+  d2rq:jdbcDSN "platoon_db"; # the "jbdc:mysql:// part is ignored
+  d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
+  d2rq:username "root";
+  d2rq:password "1234" .
+
+
+<#PUPIN_AssetMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rml:query  """ 
+      SELECT DISTINCT assets.asset_name as asset_name,
+             country.country_code as ccode,
+             assets.id as asset_id
+      FROM assets  
+         JOIN organization 
+            ON assets.organization_id = organization.id
+         JOIN country 
+            ON organization.country_id = country.id 
+         JOIN eic_functions 
+            ON assets.eic_function_id = eic_functions.id 
+      """
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/ControlArea/Asset/{asset_name}";
+      rr:class cim:Asset
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:controlArea;
+      rr:objectMap [
+        rr:template "http://platoon.eu/ControlArea/{ccode}"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference  "asset_name"
+      ]
+    ]
+    .
+
+<#PUPIN_ControlAreaMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008 ;
+      rml:query  """ 
+        SELECT DISTINCT 
+           control_area.name as name,
+           country.country_code as ccode             
+        FROM control_area
+          JOIN organization 
+            ON control_area.organization_id = organization.id     
+          JOIN country 
+            ON organization.country_id = country.id
+        """
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/ControlArea/{ccode}";
+      rr:class cim:ControlArea
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:name;
+      rr:objectMap [
+        rml:reference "name"
+      ]
+    ];
+
+     rr:predicateObjectMap [
+      rr:predicate plt:country ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{ccode}"        
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:code;
+      rr:objectMap [
+        rml:reference "ccode"
+      ]
+    ].
+
+<#PUPIN_CountryMapping> a rr:TriplesMap;
+	  rml:logicalSource [
+	    rml:source <#PLATOON_DB>;
+	    rr:sqlVersion rr:SQL2008;
+        rml:query   "SELECT DISTINCT * from country"
+	  ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Country/{country_code}";
+      rr:class sch:Country, gn:Feature
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:countryCode;
+      rr:objectMap [
+        rml:reference "country_code"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:name;
+      rr:objectMap [
+        rml:reference "country_name"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference  "country_name"
+      ]
+    ]
+    .
+
+<#PUPIN_LocationsMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_locations"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Location/{lat}_{lon}";
+      rr:class sch:Location, gn:Feature
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate wgs84_pos:lat ;
+      rr:objectMap [
+        rml:reference "lat"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate wgs84_pos:long ;
+      rr:objectMap [
+        rml:reference "lon"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate sch:city ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/City/{city}"
+      ]
+    ]
+    .
+
+<#PUPIN_CityMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "weather_locations"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/City/{city}";
+      rr:class sch:City, gn:Feature
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference "city"
+      ]
+    ]
+    .
+
+<#PUPIN_EIC_FunctionsMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "eic_functions"
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/EIC_Function/{eic_type_function_acronym}";
+      rr:class plt:EICFunction ;
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:eic_type ;
+      rr:objectMap [
+        rml:reference "eic_type_function";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:acronym ;
+      rr:objectMap [
+        rml:reference "eic_type_function_acronym";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference  "eic_function_description"
+      ]
+    ]
+    .
+
+<#PUPIN_OrganizationMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rml:query """
+       SELECT DISTINCT 
+          organization.eic_code AS eic_code,
+          organization_short_name,
+          organization_name,
+          market_participant_vat_code,
+          country.country_code AS country_code,
+          country.country_name AS country_name,
+          eic_functions.eic_type_function_acronym AS eic_type_func_acronym
+        FROM organization
+            JOIN country 
+              ON country.id = organization.country_id
+            LEFT JOIN market_role 
+              ON market_role.organization_id = organization.id
+            LEFT JOIN eic_functions 
+              ON eic_functions.id = market_role.eic_function_id
+      """
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Organization/{organization_name}_{organization_short_name}";
+      rr:class cim:Organization, cim:MktParticipant, sch:Organization ;
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:acronym ;
+      rr:objectMap [
+        rml:reference "organization_short_name";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:eicCode ;
+      rr:objectMap [
+        rml:reference "eic_code";
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate foaf:name ;
+      rr:objectMap [
+        rml:reference  "organization_name"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference  "organization_name"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:eicFunction ;
+      rr:objectMap [
+      rr:template "http://platoon.eu/EIC_Function/{eic_type_func_acronym}"
+        
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate  plt:country;
+      rr:objectMap [
+        rr:template "http://platoon.eu/Country/{country_code}"
+      ]
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:vatCode ;
+      rr:objectMap [
+        rml:reference  "market_participant_vat_code"
+      ]
+    ]
+    .
+
+<#PUPIN_ControlAreaOperatorMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rml:query """
+        SELECT DISTINCT organization_short_name,             
+               organization_name,            
+               country.country_code as country_code,
+               eic_functions.eic_type_function_acronym as eic_type_func_acronym   
+        FROM organization               
+          JOIN country 
+             ON country.id = organization.country_id
+          LEFT JOIN market_role
+             ON market_role.organization_id = organization.id
+          LEFT JOIN eic_functions 
+             ON eic_functions.id = market_role.eic_function_id       
+        WHERE eic_functions.eic_type_function = 'X'  AND
+              eic_functions.eic_type_function_acronym = 'SO'
+      """
+    ];
+
+    rr:subjectMap [
+      rr:template "http://platoon.eu/Organization/{organization_name}_{organization_short_name}";
+      rr:class cim:ControlAreaOperator, cim:Organization, cim:MktParticipant, schema:Organization ;
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate plt:operates ;
+      rr:objectMap [
+        rr:template "http://platoon.eu/ControlArea/{country_code}";        
+      ]
+    ]
+    .
