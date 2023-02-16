@@ -47,7 +47,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "weather_observations_data"
+      rr:tableName "weather_observations"
     ];
 
     rr:subjectMap [
@@ -72,7 +72,6 @@
     rr:predicateObjectMap [
       rr:predicate sch:city ;
       rr:objectMap [
-        # rr:predicateObjectMap <#PUPIN_CityMapping>;
         rr:template "http://platoon.eu/City/{city_name}";
       ]
     ];
@@ -102,7 +101,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "weather_observations_data"
+      rr:tableName "weather_observations"
     ];
 
     rr:subjectMap [
@@ -121,7 +120,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "weather_observations_data"
+      rr:tableName "weather_observations"
     ];
 
     rr:subjectMap [
