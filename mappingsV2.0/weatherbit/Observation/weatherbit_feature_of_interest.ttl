@@ -51,7 +51,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "weather_observation_data"
+      rr:tableName "weather_observations"
     ];
 
     rr:subjectMap [
@@ -98,7 +98,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rr:tableName "weather_observation_data"
+      rr:tableName "weather_observations"
     ];
 
     rr:subjectMap [
