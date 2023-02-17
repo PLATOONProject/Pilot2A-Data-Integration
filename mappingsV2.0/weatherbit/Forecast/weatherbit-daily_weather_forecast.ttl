@@ -2182,7 +2182,7 @@
 
     rr:predicateObjectMap [
       rr:predicate  seas:evaluation ;
-      rr:objectMap [s
+      rr:objectMap [
         rr:template "http://platoon.eu/WeatherBit/DailyForecast/{lat}_{lon}_{city_name}/ForecastOfWindSpeedEvaluation/{datetime}";
       ]
     ].    
