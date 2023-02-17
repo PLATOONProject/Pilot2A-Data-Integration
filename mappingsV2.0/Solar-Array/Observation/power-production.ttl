@@ -107,7 +107,7 @@
             value,
             pv_plant_energy_production.id as id
           FROM pv_plant_energy_production
-            JOIN plants ON plants.id = pv_plant_energy_production.plant_id
+            JOIN plants ON plants.id = pv_plant_energy_production_forecast.plant_id
       """
       ];
 
@@ -129,7 +129,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;       
-      rml:query "SELECT DISTINCT id, plant_id, value, REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM pv_plant_energy_production"
+      rml:query "SELECT DISTINCT id, plant_id, value, REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM pv_plant_energy_production_forecast"
     
     ];
 
