@@ -49,7 +49,7 @@
     rml:logicalSource [
       rml:source <#PLATOON_DB>;
       rr:sqlVersion rr:SQL2008;
-      rml:query "SELECT DISTINCT  REPLACE(timestamp_start, ' ', 'T') as timestamp_start, REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM pv_plant_energy_production"
+      rml:query "SELECT DISTINCT  REPLACE(timestamp_start, ' ', 'T') as timestamp_start, REPLACE(timestamp_end, ' ', 'T') as timestamp_end FROM pv_plant_energy_production_forecast"
     
     ];
 
