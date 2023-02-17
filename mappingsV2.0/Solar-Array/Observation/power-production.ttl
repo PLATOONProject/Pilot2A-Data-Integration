@@ -105,8 +105,8 @@
             REPLACE(timestamp_start, ' ', 'T') as timestamp_start,  
             REPLACE(timestamp_end, ' ', 'T') as timestamp_end,
             value,
-            pv_plant_energy_production.id as id
-          FROM pv_plant_energy_production
+            pv_plant_energy_production_forecast.id as id
+          FROM pv_plant_energy_production_forecast
             JOIN plants ON plants.id = pv_plant_energy_production_forecast.plant_id
       """
       ];
