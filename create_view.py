@@ -1,37 +1,8 @@
 from mysql import connector
 if __name__ == '__main__':
-	db = connector.connect(host = "6.tcp.ngrok.io", port = 18706, user = "root", password = "XXX")
+	db = connector.connect(host = "6.tcp.ngrok.io", port = 18706, user = "root", password = "ahmad123")
 	cursor = db.cursor(buffered=True)
 	cursor.execute("use platoon_db_02_23")
-	cursor.execute("DROP TABLE IF EXISTS solar_array_properties")
-	cursor.execute("DROP VIEW IF EXISTS solar_array_observation")
-	cursor.execute("""CREATE VIEW solar_array_observation AS
-						SELECT DISTINCT 
-						  plants.name as plant_name,  
-						  CAST(pv_plant_weather_data.plant_id AS CHAR(20)) as plant_id,
-						  REPLACE(pv_plant_weather_data.timestamp, ' ', 'T') as timestamp,
-						  weather_locations.lon as lon,
-						  weather_locations.lat as lat,
-						  weather_locations.city as city,
-						  assets.asset_name as asset_name
-						FROM `plants`     
-						  JOIN pv_plant_weather_data 
-						    ON plants.id = pv_plant_weather_data.plant_id 
-						  JOIN weather_locations 
-						    ON plants.weather_location_id = weather_locations.id
-						  JOIN assets 
-						    ON plants.asset_id = assets.id""")
-	cursor.execute("DROP VIEW IF EXISTS solar_array_observation_data")
-	cursor.execute("""CREATE VIEW solar_array_observation_data AS
-						SELECT DISTINCT 
-						plant_id,
-						out_temperature,
-						insolation,
-						panel_temperature,
-						wind_spd,
-						wind_dir,
-						REPLACE(timestamp, ' ', 'T') as timestamp
-						FROM pv_plant_weather_data""")
 	cursor.execute("DROP TABLE IF EXISTS weatherbit_daily_weather_forecast_properties")
 	cursor.execute("DROP VIEW IF EXISTS weatherbit_daily_weather_forecast")
 	cursor.execute("""CREATE VIEW weatherbit_daily_weather_forecast AS
@@ -107,6 +78,7 @@ if __name__ == '__main__':
 						hourly_weather_forecasts.wind_dir as wind_dir,
 						hourly_weather_forecasts.wind_cdir_full as wind_cdir_full,
 						hourly_weather_forecasts.wind_cdir as wind_cdir,
+						hourly_weather_forecasts.ozone as ozone,
 						REPLACE(hourly_weather_forecasts.timestamp_local, ' ', 'T') as timestamp_local, 
 						REPLACE(hourly_weather_forecasts.timestamp_utc, ' ', 'T') as timestamp_utc
 						FROM hourly_weather_forecasts""")

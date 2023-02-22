@@ -169,3 +169,23 @@
         rr:datatype xsd:int
       ]
     ].   
+
+<#PUPIN_TemporalContextMapping> a rr:TriplesMap;
+    rml:logicalSource [
+      rml:source <#PLATOON_DB>;
+      rr:sqlVersion rr:SQL2008;
+      rr:tableName "solar_array_observation_data"
+    ];
+  
+     rr:subjectMap [
+      rr:template "http://platoon.eu/TemporalContext/{timestamp}";
+      rr:class time:TemporalEntity, time:Instant
+    ];
+
+    rr:predicateObjectMap [
+      rr:predicate time:inXSDDateTimeStamp;
+      rr:objectMap [
+        rml:reference "timestamp";
+        rr:datatype xsd:dateTimeStamp 
+      ]
+    ]. 
